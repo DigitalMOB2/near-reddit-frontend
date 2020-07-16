@@ -1,0 +1,13 @@
+.siteLayoutBackground {
+  background: var(--white);
+  box-shadow: var(--box-shadow);
+}
+
+.container {
+  padding: 24px;
+  min-height: 360px;
+}
+
+.layout {
+  min-height: 100vh;
+}

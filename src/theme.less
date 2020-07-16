@@ -1,0 +1,51 @@
+@import 'node_modules/antd/dist/antd.less';
+@import './utilities';
+
+@font-family: 'Exo', sans-serif;
+@border-radius-base: 6px;
+@box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+@grey: #f1f1f1;
+
+:root {
+  --primary-color: @primary-color;
+  --info-color: @info-color;
+  --success-color: @success-color;
+  --processing-color: @processing-color;
+  --error-color: @error-color;
+  --highlight-color: @highlight-color;
+  --warning-color: @warning-color;
+  --normal-color: @normal-color;
+  --white: @white;
+  --black: @black;
+  --grey: @grey;
+  --border-radius: @border-radius-base;
+  --box-shadow: @box-shadow;
+}
+
+@dropdown-prefix-cls: ~'@{ant-prefix}-dropdown';
+@menu-prefix-cls: ~'@{ant-prefix}-menu';
+@layout-sider-background: @white;
+
+.@{dropdown-prefix-cls} {
+  box-shadow: @box-shadow;
+}
+
+.@{menu-prefix-cls}-item a, .@{menu-prefix-cls}-item span {
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.ant-layout-sider {
+  box-shadow: @box-shadow;
+}
+
+.ant-layout-sider-trigger {
+  color: var(--black);
+  background: var(--white);
+}
+
+@menu-item-font-size: 14px;
+
+body {
+  font-weight: 500;
+}
