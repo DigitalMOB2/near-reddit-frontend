@@ -1,0 +1,11 @@
+{
+  "welcome": "Add Moderator Page!",
+  "label": "Username",
+  "placeholder": "Username",
+  "inputError": "Please input username",
+  "submit": "Submit",
+  "error": {
+    "retrieveData": "There was an error retrieving data. Please try again later",
+    "title": "Error"
+  }
+}

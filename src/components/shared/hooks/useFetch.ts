@@ -73,9 +73,7 @@ export const useFetch = (options: FetchOptionsType = {}) => {
     apiService.loadRequestInterceptor(
         (request: any) => {
             setLoading(true);
-            if (authCtx.state.isLoggedIn) {
-                request.headers.Authorization = `Bearer ${authCtx.getToken()}`;
-            }},
+            },
         () => {});
 
     apiService.loadResponseInterceptor(

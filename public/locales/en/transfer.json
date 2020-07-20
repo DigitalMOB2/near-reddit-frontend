@@ -1,0 +1,14 @@
+{
+  "welcome": "Transfer tokens page!",
+  "userLabel": "Username",
+  "userPlaceholder": "Username",
+  "userInputError": "Please input username",
+  "tokenNumberLabel": "Token number",
+  "tokenNumberPlaceholder": "Token number",
+  "tokenNumberInputError": "Please input token number",
+  "submit": "Submit",
+  "error": {
+    "retrieveData": "There was an error retrieving data. Please try again later",
+    "title": "Error"
+  }
+}

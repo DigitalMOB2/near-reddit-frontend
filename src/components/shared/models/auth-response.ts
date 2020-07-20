@@ -9,9 +9,6 @@ export class AuthResponse {
   @JsonProperty('request', CommonResponse)
   request?: CommonResponse = undefined;
 
-  @JsonProperty('user', AuthRecord)
-  user?: AuthRecord = undefined;
-
   @JsonProperty('customer', CustomerRecord)
   customer?: CustomerRecord = undefined;
 }

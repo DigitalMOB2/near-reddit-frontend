@@ -8,12 +8,12 @@ const defaultConfig = {
     routes: {
         homepage: '/',
         users: '/users',
-        activity: '/activity',
-        createToken: '/create-token',
-        modifyToken: '/modify-token',
-        accountInfo: '/account-info',
-        multisigCreate: '/create-multisig',
         login: '/login',
+        addModerator: '/add-moderator',
+        removeModerator: '/remove-moderator',
+        transfer: '/transfer-tokens',
+        mint: '/mint-tokens',
+        purchase: '/purchase-item',
     },
     defaultEventsCount: 100,
     defaultLanguageId: 1

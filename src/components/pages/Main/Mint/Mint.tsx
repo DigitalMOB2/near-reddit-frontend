@@ -2,13 +2,13 @@ import React from 'react';
 import {Col, Divider, Row} from 'antd';
 import {useTranslation} from 'react-i18next';
 
-export function Homepage() {
-    const {t} = useTranslation(['homepage']);
+export function Mint() {
+    const {t} = useTranslation(['mint']);
 
     return <>
         <div>
             <h2 className={'text-center'}>
-                {t('homepage:welcome')}
+                {t('mint:welcome')}
             </h2>
             <Divider/>
         </div>

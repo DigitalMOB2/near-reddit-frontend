@@ -1,6 +1,7 @@
 export type RouteType = {
     name: string,
     path: string,
+    role: string,
     component: Function,
     isInMenu: boolean,
     icon?: Function,

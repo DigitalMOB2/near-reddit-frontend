@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo } from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {
   Alert, Button, Checkbox, Col, Form, Input, Row,
 } from 'antd';
@@ -10,11 +10,13 @@ import { AuthRequest } from '../../../shared/models/auth-request';
 import { useAuth } from './Auth.context';
 import { AuthResponse } from '../../../shared/models/auth-response';
 import { useFetch } from '../../../shared/hooks/useFetch';
-import { getErrorMsgByCode } from './auth.helper';
+import { getErrorMsgByCode } from '../../../shared/utilities/auth.helper';
 import { getBackendEndpoint } from '../../../shared/utilities/api';
 import { getJsonConvert } from '../../../shared/utilities/json-convert';
 
 export function Login() {
+  const [verify, setVerify] = useState(false);
+  const [user, setUser] = useState<any>({});
   const authCtx = useAuth();
   const history = useHistory();
   const jsonConvert = useMemo(() => getJsonConvert(), []);
@@ -26,26 +28,35 @@ export function Login() {
     load: false,
   });
 
+  const users: any = {
+    "owner": {name: "Reddit", type: "Owner"},
+    "moderator": {name: "Near", type: "Moderator"},
+    "user": {name: "Name", type: "User"}
+  }
+
   const onFinish = useCallback(async (values: any) => {
-    await post(new AuthRequest(values.username, values.password));
+    if (values.username in users) {
+      setVerify(true);
+      setUser(users[values.username]);
+    }
   }, []);
 
   useEffect(() => {
-    if (!responseData) {
+    if (!verify) {
       return;
     }
-    const authResponse = jsonConvert.deserializeObject(responseData.resource, AuthResponse);
+
     setTimeout(() => {
-      authCtx.setAuthResponse(authResponse);
+      authCtx.setAuthResponse({request: {status: '200', reason: 'OK'}, customer: {name: user.name, type: user.type, id: 1}});
       history.push(config.routes.homepage);
     },
-    1000);
-  }, [responseData]);
+    100);
+  }, [verify, user]);
 
   return (
     <>
       <Row gutter={12} justify="center">
-        <Col>
+        <Col className={'w-25'}>
           <h2 className="text-center">Sign in</h2>
           {error && (
             <Alert
@@ -60,7 +71,7 @@ export function Login() {
             name="basic"
             layout="vertical"
             size="large"
-            initialValues={{ remember: true, username: '', password: '' }}
+            initialValues={{ username: '' }}
             onFinish={onFinish}
           >
             <Form.Item
@@ -69,18 +80,6 @@ export function Login() {
               rules={[{ required: true, message: 'Please input your username!' }]}
             >
               <Input />
-            </Form.Item>
-
-            <Form.Item
-              label="Password"
-              name="password"
-              rules={[{ required: true, message: 'Please input your password!' }]}
-            >
-              <Input.Password />
-            </Form.Item>
-
-            <Form.Item name="remember" valuePropName="checked">
-              <Checkbox>Remember me</Checkbox>
             </Form.Item>
 
             <Form.Item className="text-center m-t-10">

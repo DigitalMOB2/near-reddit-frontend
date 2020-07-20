@@ -1,13 +1,17 @@
 import React, {useState} from 'react';
-import {Layout, Button} from 'antd';
+import {Layout} from 'antd';
+import {Link} from 'react-router-dom';
+import {UserAddOutlined, UserDeleteOutlined, TeamOutlined, UploadOutlined, DownloadOutlined} from '@ant-design/icons';
 import cs from 'classnames';
-import { RightOutlined, LeftOutlined } from '@ant-design/icons';
 
 import {RouteType} from '../route.type';
-import {Header} from '../shared/components/Header/Header';
 
+import {Header} from '../shared/components/Header/Header';
+import {Menu} from '../shared/components/Menu/Menu';
 import s from '../App/app.module.css';
 import {Footer} from '../shared/components/Footer';
+import {AccountInfo} from '../shared/components/Sider/AccountInfo';
+import logoSvg from '../shared/assets/near_logo_white.svg';
 
 const {Content, Sider} = Layout;
 
@@ -27,12 +31,14 @@ type PropType = {
 
 export function RouteItem({ route, routes, index }: PropType) {
 
-    const [collapsed, setCollapsed] = useState(false);
-
     return <><div className="flex flex-row">
             {route.sider ? <route.sider/> :
-                <Sider collapsible collapsed={collapsed} onCollapse={() => setCollapsed(!collapsed)}
-                       trigger={<Button>{collapsed ? <RightOutlined/> : <LeftOutlined/>}</Button>} width={260}>
+                <Sider className={cs([s.sider])} width={260}>
+                    <Link to={'/'}>
+                        <img src={logoSvg} alt={'logo'}/>
+                    </Link>
+                    <AccountInfo/>
+                    <Menu/>
                 </Sider>
             }
         </div>

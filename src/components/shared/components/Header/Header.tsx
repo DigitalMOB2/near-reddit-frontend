@@ -1,39 +1,26 @@
-import React, {useCallback, useState} from 'react';
+import React from 'react';
 import cs from 'classnames';
-import {Dropdown, Layout} from 'antd';
-import {CaretDownFilled, CaretUpFilled} from '@ant-design/icons/lib';
+import {Button, Layout} from 'antd';
+import {LogoutOutlined} from '@ant-design/icons/lib';
 
 import s from '../../../App/app.module.css';
-import {UserMenu} from './UserMenu';
-import {UserAvatar} from './UserAvatar';
 import {useAuth} from '../../../pages/Main/Login/Auth.context';
+import {useHistory} from 'react-router-dom';
+import {config} from '../../../../config';
 
 const {Header: HeaderAntd} = Layout;
 
 export function Header() {
-
-    const [dropdownVisible, setDropdownVisible] = useState(false);
     const authCtx = useAuth();
-    const getCustomer = useCallback(() => {
-        if(authCtx.state.isLoggedIn) {
-            return authCtx.getCustomerName();
-        } else {
-            return 'None'
-        }
-    }, [authCtx.state.customer]);
+    const history = useHistory();
+
+    const logout = () => {
+        authCtx.logout();
+        history.push(config.routes.login);
+    }
 
     return <HeaderAntd className={cs(["p-l-30 flex flex-end flex-align-center", s.siteLayoutBackground])}>
         {
-            authCtx.state.isLoggedIn && <Dropdown overlay={<UserMenu logout={() => authCtx.logout()}/>} onVisibleChange={(isVisible) => {
-            setDropdownVisible(isVisible);
-        }}>
-            <span>
-                <UserAvatar/>
-                <span className={'m-l-4 font-semi-b'}>
-                    {getCustomer()}
-                </span>
-                { dropdownVisible ? <CaretUpFilled className='m-l-4'/> : <CaretDownFilled className='m-l-4'/>}
-            </span>
-        </Dropdown>}
+            authCtx.state.isLoggedIn && <Button icon={<LogoutOutlined />} onClick={() => logout()}>Logout</Button>}
     </HeaderAntd>
 }

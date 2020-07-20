@@ -1,72 +1,67 @@
 import React, {createContext, useCallback, useContext, useState} from 'react';
 
-import {CustomerRecord} from '../../../shared/models/customer-record';
 import {AuthResponse} from '../../../shared/models/auth-response';
 
 export const AuthContext = createContext<AuthContextType>(null as any);
 
-const LOCAL_STORAGE_TOKEN_NAME = 'algorandlu_token';
-
 // @TODO This will be removed when we'll have an API to get user
-const LOCAL_STORAGE_CUSTOMER_NAME = 'algorandlu_customer_name';
+const LOCAL_STORAGE_CUSTOMER_NAME = 'near_customer_name';
+const LOCAL_STORAGE_CUSTOMER_TYPE = 'near_customer_type';
 
 export type AuthStateType = {
     isLoggedIn: boolean,
-    userSessionId: string,
     customerName: string,
-    customer: CustomerRecord
+    customerType: string,
 }
 
 export type AuthContextType = {
     state: AuthStateType,
     setAuthResponse: (authResponse: AuthResponse) => void,
     logout: () => void,
-    getToken: () => string,
     getCustomerName: () => string
+    getCustomerType: () => string
 }
 
 export function AuthProvider(props: any) {
-    const token = localStorage.getItem(LOCAL_STORAGE_TOKEN_NAME);
-    const userSessionId = localStorage.getItem(LOCAL_STORAGE_TOKEN_NAME);
     const customerName = localStorage.getItem(LOCAL_STORAGE_CUSTOMER_NAME);
+    const customerType = localStorage.getItem(LOCAL_STORAGE_CUSTOMER_TYPE);
 
     const [state, setState] = useState<AuthStateType>({
-        isLoggedIn: !!token,
-        userSessionId: userSessionId,
+        isLoggedIn: !!customerName,
         customerName: customerName,
-        customer: null
+        customerType: customerType,
     });
 
     const setAuthResponse = useCallback((authResponse: AuthResponse) => {
+        localStorage.setItem(LOCAL_STORAGE_CUSTOMER_NAME, authResponse.customer.name);
+        localStorage.setItem(LOCAL_STORAGE_CUSTOMER_TYPE, authResponse.customer.type);
+
         setState({
             ...state,
             isLoggedIn: true,
-            userSessionId: authResponse.user.userSessionId,
             customerName: authResponse.customer.name,
-            customer: authResponse.customer
+            customerType: authResponse.customer.type,
         });
-        localStorage.setItem(LOCAL_STORAGE_TOKEN_NAME, authResponse.user.userSessionId);
-        localStorage.setItem(LOCAL_STORAGE_CUSTOMER_NAME, authResponse.customer.name);
     }, []);
 
     const logout = useCallback(() => {
-        localStorage.removeItem(LOCAL_STORAGE_TOKEN_NAME);
         localStorage.removeItem(LOCAL_STORAGE_CUSTOMER_NAME);
+        localStorage.removeItem(LOCAL_STORAGE_CUSTOMER_TYPE);
         setState({
             ...state,
             isLoggedIn: false
         })
     }, []);
 
-    const getToken = useCallback(() => {
-        return localStorage.getItem(LOCAL_STORAGE_TOKEN_NAME);
-    }, []);
-
     const getCustomerName = useCallback(() => {
         return localStorage.getItem(LOCAL_STORAGE_CUSTOMER_NAME);
     }, []);
 
-    const value: AuthContextType = {state, setAuthResponse, logout, getToken, getCustomerName};
+    const getCustomerType = useCallback(() => {
+        return localStorage.getItem(LOCAL_STORAGE_CUSTOMER_TYPE);
+    }, []);
+
+    const value: AuthContextType = {state, setAuthResponse, logout, getCustomerName, getCustomerType};
 
     return <AuthContext.Provider value={value}>
         {props.children}

@@ -25238,6 +25238,9 @@ div.ant-typography-edit-content.ant-typography-rtl {
 .w-100 {
   width: 100%;
 }
+.w-25 {
+  width: 25%;
+}
 .flex {
   display: flex;
 }
@@ -25321,6 +25324,12 @@ flex-start {
 .ant-layout-sider-trigger {
   color: var(--black);
   background: var(--white);
+}
+.ant-menu-item-selected {
+  background-color: #24272a !important;
+}
+.ant-menu-item a {
+  color: var(--white);
 }
 body {
   font-weight: 500;

@@ -3,6 +3,27 @@
   box-shadow: var(--box-shadow);
 }
 
+.sider {
+  background-color: rgb(36, 39, 42);
+  font-size: 14px;
+  text-align: center;
+}
+
+.menu {
+  background-color: rgb(36, 39, 42);
+  font-size: 14px;
+  text-align: left;
+  border-right: 0;
+}
+
+.menu-item-text{
+  color: var(--white) !important;
+}
+
+.menu-item-text:hover{
+  color: var(--primary-color) !important;
+}
+
 .container {
   padding: 24px;
   min-height: 360px;
