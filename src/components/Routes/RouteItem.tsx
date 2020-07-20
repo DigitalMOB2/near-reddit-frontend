@@ -1,7 +1,6 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Layout} from 'antd';
 import {Link} from 'react-router-dom';
-import {UserAddOutlined, UserDeleteOutlined, TeamOutlined, UploadOutlined, DownloadOutlined} from '@ant-design/icons';
 import cs from 'classnames';
 
 import {RouteType} from '../route.type';

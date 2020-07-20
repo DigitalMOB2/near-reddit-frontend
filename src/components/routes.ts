@@ -32,7 +32,7 @@ export const routes = [
         exact: true,
         isHome: true,
         isPrivate: true,
-        role:  ['Owner']
+        role: ['Owner']
     },
     {
         name: 'Remove Moderator',
@@ -85,7 +85,8 @@ export const routes = [
         isInMenu: false,
         isPrivate: false,
         breadcrumb: true,
-        sider: LoginSider
+        sider: LoginSider,
+        role: ['Owner', 'Moderator', 'User']
     },
     {
         name: 'Not found',
@@ -93,6 +94,7 @@ export const routes = [
         component: NotFound,
         isInMenu: false,
         isPrivate: false,
-        sider: LoginSider
+        sider: LoginSider,
+        role: ['Owner', 'Moderator', 'User']
     }
 ];
