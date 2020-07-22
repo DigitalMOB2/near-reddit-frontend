@@ -1,12 +1,202 @@
 .siteLayoutBackground {
-  background: var(--white);
-  box-shadow: var(--box-shadow);
+  background: #8ADFDA;
 }
 
 .sider {
   background-color: rgb(36, 39, 42);
   font-size: 14px;
   text-align: center;
+}
+
+.loginSider {
+  background-color: var(--white);
+  font-size: 14px;
+  text-align: left;
+  padding: 72px;
+}
+
+.loginUpperText {
+  margin: 40px 0;
+  color: #453332;
+}
+
+.loginStrangerText {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.loginDestinyText {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 32px;
+  line-height: 40px;
+}
+
+.loginSignInAsText {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 32px;
+  line-height: 40px;
+  color: darkgrey;
+}
+
+.loginIconRight {
+  font-size: 16px;
+  position: absolute;
+  left: 90%;
+}
+
+.loginUsersRow {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.loginUserCol {
+  padding: 0 0 0 16px;
+}
+
+.shopItemsCol {
+  padding-left: 16px;
+}
+
+.shopItemsRow {
+  align-items: center;
+}
+
+.editUserCol {
+  padding-left: 16px;
+}
+
+.loginUserRowText {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.loginUserRowSubText {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  opacity: 0.4;
+}
+
+.loginRightSideBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 46%;
+}
+
+.loginRightSideTopText {
+  font-weight: bold;
+  font-size: 72px;
+  line-height: 72px;
+  color: var(--white);
+  letter-spacing: -0.04em;
+  padding-bottom: 32px;
+}
+
+.loginRightSideMiddleText {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 28px;
+  padding-bottom: 32px;
+}
+
+.loginRightSideBottomText {
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 24px;
+  letter-spacing: 0.02em;
+}
+
+.modalContainer {
+  padding-top: 20px;
+}
+
+.modalText {
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.modalTextTitle {
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 24px;
+  padding-top: 42px;
+}
+
+
+.modalTransferRowText {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  padding-top: 10px;
+}
+
+.modalTextTitleRight {
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 24px;
+  padding-top: 85px;
+}
+
+.modalSubText {
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 24px;
+  opacity: 0.4;
+}
+
+.modalTokenName {
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 50px;
+  opacity: 0.5;
+  padding-left: 5px;
+}
+
+.modalTextBalance {
+  font-weight: 500;
+  font-size: 32px;
+  line-height: 40px;
+  padding-top: 10px;
+}
+
+.modalColRight {
+  padding: 20px;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.modalFakePostContainer {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.modalFakePostTitle {
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 24px;
+  padding: 85px 0 20px 0;
+}
+
+.modalMiddleSwitch {
+  position: absolute;
+  left: 78%;
+}
+
+.modalShopBuyButton {
+  position: absolute;
+  left: 78%;
 }
 
 .menu {
@@ -26,7 +216,9 @@
 
 .container {
   padding: 24px;
-  min-height: 360px;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
 }
 
 .layout {

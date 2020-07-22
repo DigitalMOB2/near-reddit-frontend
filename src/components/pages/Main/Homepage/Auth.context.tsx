@@ -10,26 +10,41 @@ const LOCAL_STORAGE_CUSTOMER_TYPE = 'near_customer_type';
 
 export type AuthStateType = {
     isLoggedIn: boolean,
+    isSpinning: boolean,
     customerName: string,
     customerType: string,
+    customerBalance: string,
+    user: {},
+    showModal: boolean
+}
+
+export type UserType = {
+    name: string,
+    type: string,
+    balance: string
 }
 
 export type AuthContextType = {
     state: AuthStateType,
     setAuthResponse: (authResponse: AuthResponse) => void,
     logout: () => void,
-    getCustomerName: () => string
-    getCustomerType: () => string
+    getCustomerName: () => string,
+    getCustomerType: () => string,
+    setUser: (user: UserType) => void,
+    setSpinning: (spinning: boolean) => void
 }
 
 export function AuthProvider(props: any) {
     const customerName = localStorage.getItem(LOCAL_STORAGE_CUSTOMER_NAME);
-    const customerType = localStorage.getItem(LOCAL_STORAGE_CUSTOMER_TYPE);
 
     const [state, setState] = useState<AuthStateType>({
         isLoggedIn: !!customerName,
-        customerName: customerName,
-        customerType: customerType,
+        customerName: '',
+        customerType: '',
+        customerBalance: '',
+        showModal: false,
+        isSpinning: false,
+        user: {}
     });
 
     const setAuthResponse = useCallback((authResponse: AuthResponse) => {
@@ -44,14 +59,29 @@ export function AuthProvider(props: any) {
         });
     }, []);
 
-    const logout = useCallback(() => {
-        localStorage.removeItem(LOCAL_STORAGE_CUSTOMER_NAME);
-        localStorage.removeItem(LOCAL_STORAGE_CUSTOMER_TYPE);
+    const setUser = useCallback((user: UserType) => {
         setState({
             ...state,
-            isLoggedIn: false
-        })
+            showModal: true,
+            customerName: user.name,
+            customerType: user.type,
+            customerBalance: user.balance,
+        });
     }, []);
+
+    const setSpinning = useCallback((spinning: boolean) => {
+        setState({
+            ...state,
+            isSpinning: spinning
+        })
+    }, [])
+
+    const logout = useCallback(() => {
+        setState({
+            ...state,
+            showModal: false,
+        })
+    }, [state.customerType]);
 
     const getCustomerName = useCallback(() => {
         return localStorage.getItem(LOCAL_STORAGE_CUSTOMER_NAME);
@@ -61,7 +91,7 @@ export function AuthProvider(props: any) {
         return localStorage.getItem(LOCAL_STORAGE_CUSTOMER_TYPE);
     }, []);
 
-    const value: AuthContextType = {state, setAuthResponse, logout, getCustomerName, getCustomerType};
+    const value: AuthContextType = {state, setAuthResponse, logout, getCustomerName, getCustomerType, setUser, setSpinning};
 
     return <AuthContext.Provider value={value}>
         {props.children}

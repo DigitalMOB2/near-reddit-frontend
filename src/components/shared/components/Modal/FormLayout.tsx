@@ -1,15 +1,15 @@
 export const layout = {
     labelCol: {
-        span: 4,
+        span: 6,
     },
     wrapperCol: {
-        span: 10,
+        span: 16,
     },
 }
 
 export const tailLayout = {
     wrapperCol: {
-        offset: 4,
-        span: 10,
+        offset: 6,
+        span: 16,
     },
 }

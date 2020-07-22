@@ -2,6 +2,7 @@
 /* stylelint-disable no-duplicate-selectors */
 /* stylelint-disable */
 /* stylelint-disable declaration-bang-space-before,no-duplicate-selectors,string-no-newline */
+@import '~fontsource-sora/index.css';
 [class^=ant-]::-ms-clear,
 [class*= ant-]::-ms-clear,
 [class^=ant-] input::-ms-clear,
@@ -50,7 +51,7 @@ body {
   margin: 0;
   color: rgba(0, 0, 0, 0.65);
   font-size: 14px;
-  font-family: 'Exo', sans-serif;
+  font-family: 'Sora';
   font-variant: tabular-nums;
   line-height: 1.5715;
   background-color: #fff;
@@ -18120,7 +18121,7 @@ span.ant-radio + * {
 }
 .ant-select-multiple .ant-select-selection-search-input,
 .ant-select-multiple .ant-select-selection-search-mirror {
-  font-family: 'Exo', sans-serif;
+  font-family: 'Sora';
   line-height: 1.5715;
   transition: all 0.3s;
 }
@@ -19178,7 +19179,7 @@ span.ant-radio + * {
 .ant-statistic-content {
   color: rgba(0, 0, 0, 0.85);
   font-size: 24px;
-  font-family: 'Exo', sans-serif;
+  font-family: 'Sora';
 }
 .ant-statistic-content-value {
   display: inline-block;
@@ -19251,7 +19252,7 @@ span.ant-radio + * {
   height: 32px;
   margin: 0 8px 0 0;
   font-size: 16px;
-  font-family: 'Exo', sans-serif;
+  font-family: 'Sora';
   line-height: 32px;
   text-align: center;
   border: 1px solid rgba(0, 0, 0, 0.25);
@@ -25319,7 +25320,47 @@ flex-start {
   font-size: 14px;
 }
 .ant-layout-sider {
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  box-shadow: none;
+}
+.ant-collapse-header {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+}
+.ant-collapse-icon-position-right > .ant-collapse-item > .ant-collapse-header {
+  padding: 0;
+  padding-right: 145px;
+}
+.ant-collapse-extra {
+  padding-right: 20px;
+}
+.ant-collapse > .ant-collapse-item > .ant-collapse-header .ant-collapse-arrow {
+  font-size: 16px;
+}
+.ant-collapse-content > .ant-collapse-content-box {
+  padding: 0;
+}
+.ant-collapse-ghost > .ant-collapse-item > .ant-collapse-content > .ant-collapse-content-box {
+  padding-top: 20px;
+  padding-bottom: 0;
+}
+.ant-collapse-icon-position-right > .ant-collapse-item > .ant-collapse-header .ant-collapse-arrow {
+  right: auto;
+  left: 300px;
+}
+.ant-switch-checked {
+  background-color: #90DE2E;
+}
+.ant-switch-small.ant-switch-checked .ant-switch-handle {
+  left: calc(100% - 8px - 4px);
+}
+.ant-switch-small .ant-switch-handle {
+  width: 8px;
+  height: 8px;
+}
+.ant-switch-handle {
+  top: 4px;
+  left: 4px;
 }
 .ant-layout-sider-trigger {
   color: var(--black);

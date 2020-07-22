@@ -8,7 +8,7 @@ import {RouteType} from '../../../route.type';
 import { getParentItemByPath } from './helper';
 import {modules} from '../../../pages/modules/config';
 import s from '../../../App/app.module.css';
-import {useAuth} from '../../../pages/Main/Login/Auth.context';
+import {useAuth} from '../../../pages/Main/Homepage/Auth.context';
 
 const {SubMenu} = MenuAntd;
 

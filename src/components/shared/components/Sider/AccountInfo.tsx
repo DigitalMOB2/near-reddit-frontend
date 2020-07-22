@@ -2,7 +2,7 @@ import React, {useCallback} from 'react';
 import {Col, Divider, Row} from 'antd';
 import {useTranslation} from 'react-i18next';
 import arrowRight from '../../assets/icon-arrow-right.svg';
-import {useAuth} from '../../../pages/Main/Login/Auth.context';
+import {useAuth} from '../../../pages/Main/Homepage/Auth.context';
 
 export function AccountInfo() {
     const {t} = useTranslation(['homepage']);

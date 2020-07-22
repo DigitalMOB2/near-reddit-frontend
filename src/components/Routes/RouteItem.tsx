@@ -5,17 +5,16 @@ import cs from 'classnames';
 
 import {RouteType} from '../route.type';
 
-import {Header} from '../shared/components/Header/Header';
 import {Menu} from '../shared/components/Menu/Menu';
 import s from '../App/app.module.css';
-import {Footer} from '../shared/components/Footer';
 import {AccountInfo} from '../shared/components/Sider/AccountInfo';
 import logoSvg from '../shared/assets/near_logo_white.svg';
+import {UserModal} from '../shared/components/Modal/UserModal';
 
 const {Content, Sider} = Layout;
 
 function ContentContainer(props: any) {
-    return <Content className={'p-30'}>
+    return <Content>
         <div className={cs([s.siteLayoutBackground, s.container])}>
             {props.children}
         </div>
@@ -41,15 +40,13 @@ export function RouteItem({ route, routes, index }: PropType) {
                 </Sider>
             }
         </div>
+
+        <UserModal/>
+
         <div className="flex flex-col w-100">
-            <Header/>
-            {route.layout ? <route.layout>
-                <route.component/>
-            </route.layout> : <ContentContainer>
+            <ContentContainer>
                 <route.component/>
             </ContentContainer>
-            }
-            <Footer />
         </div>
     </>
 }

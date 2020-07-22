@@ -4,7 +4,7 @@ import {Button, Layout} from 'antd';
 import {LogoutOutlined} from '@ant-design/icons/lib';
 
 import s from '../../../App/app.module.css';
-import {useAuth} from '../../../pages/Main/Login/Auth.context';
+import {useAuth} from '../../../pages/Main/Homepage/Auth.context';
 import {useHistory} from 'react-router-dom';
 import {config} from '../../../../config';
 

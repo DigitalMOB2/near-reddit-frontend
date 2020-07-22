@@ -5,7 +5,7 @@ import HttpCodes from 'http-status-codes';
 import {ApiService} from '../services/api.service';
 import {FetchErrorType} from './fetch-error.type';
 import {FetchOptionsType} from './fetch-options.type';
-import {useAuth} from '../../pages/Main/Login/Auth.context';
+import {useAuth} from '../../pages/Main/Homepage/Auth.context';
 
 export const useFetch = (options: FetchOptionsType = {}) => {
 
