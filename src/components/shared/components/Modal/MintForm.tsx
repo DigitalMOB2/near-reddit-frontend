@@ -31,7 +31,7 @@ export function MintForm() {
                     name="amount"
                     rules={[{ required: true, message: 'Please input amount!' }]}
                 >
-                    <Input prefix="Amount you want to mint"  suffix="REDD" />
+                    <Input type={'number'} prefix="Amount you want to mint"  suffix="REDD" />
                 </Form.Item>
                 <Form.Item>
                     <Button className="login-form-button"

@@ -1,6 +1,7 @@
-import React, {useState} from "react";
-import {Modal, Form, Row, Divider, Col, Collapse, Button, Input, Drawer} from "antd";
+import React from "react";
+import {Modal,  Row, Divider, Col, Drawer} from "antd";
 import cs from 'classnames';
+import numeral from 'numeral';
 
 import iconOwner from '../../assets/icon-owner.svg';
 import iconModerator from '../../assets/icon-moderator.svg';
@@ -82,7 +83,7 @@ export function UserModal() {
                             your account balance is ...
                         </Row>
                         <Row className={cs([s.modalTextBalance])}>
-                            {authCtx.state.customerBalance} <div className={cs([s.modalTokenName])}>REDD</div>
+                            {numeral(authCtx.state.customerBalance).format('0,0.00')} <div className={cs([s.modalTokenName])}>REDD</div>
                         </Row>
                         <Divider />
                         <Row className={cs([s.loginUsersRow])} onClick={() => showTransferDrawer()}>

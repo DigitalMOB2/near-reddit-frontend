@@ -1,11 +1,9 @@
 import React from 'react';
 import {Row} from 'antd';
-import {useTranslation} from 'react-i18next';
 import cs from 'classnames';
 import s from '../../../App/app.module.css';
 
 export function Homepage() {
-    const {t} = useTranslation(['homepage']);
 
     return <>
         <div className={cs([s.loginRightSideBox])}>

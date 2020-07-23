@@ -1,5 +1,5 @@
 import React, {useCallback} from 'react';
-import {Col, Divider, Row} from 'antd';
+import {Col, Row} from 'antd';
 import {useTranslation} from 'react-i18next';
 import arrowRight from '../../assets/icon-arrow-right.svg';
 import {useAuth} from '../../../pages/Main/Homepage/Auth.context';

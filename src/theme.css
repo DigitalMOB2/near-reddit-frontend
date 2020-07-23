@@ -25394,6 +25394,11 @@ flex-start {
 .ant-input {
   width: 30%;
 }
+.recharts-wrapper {
+  position: absolute;
+  top: 50px;
+  left: -242px;
+}
 .ant-input-suffix {
   top: 32px;
   left: 90px;
@@ -25418,5 +25423,15 @@ flex-start {
 }
 body {
   font-weight: 500;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  /* display: none; <- Crashes Chrome on hover */
+  -webkit-appearance: none;
+  margin: 0;
+  /* <-- Apparently some margin are still there even though it's hidden */
+}
+input[type=number] {
+  -moz-appearance: textfield;
 }
 /*# sourceMappingURL=theme.css.map */

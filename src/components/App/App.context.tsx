@@ -19,7 +19,7 @@ export function AppProvider(props: any) {
                 ...state,
                 loadedModuleKey: key
         })
-    }, []);
+    }, [state]);
 
     const value: AppContextType = { state, setModule };
 

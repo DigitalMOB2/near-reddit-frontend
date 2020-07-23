@@ -1,5 +1,7 @@
 import React from "react";
 import {Col, Divider, Row, Switch} from 'antd';
+import {LoadingOutlined} from '@ant-design/icons/lib';
+
 import iconSettings from '../../assets/icon-settings.svg';
 import cs from 'classnames';
 import s from '../../../App/app.module.css';
@@ -7,6 +9,8 @@ import iconModerator from '../../assets/icon-moderator.svg';
 import iconPeasant from '../../assets/icon-user.svg';
 
 export function EditUsers() {
+    const [loading, setLoading] = React.useState(false);
+
     const users: any = [
         {name: "Theresa Webb", type: "Owner"},
         {name: "Eleanor Pena", type: "Moderator"},
@@ -15,7 +19,18 @@ export function EditUsers() {
         {name: "Devon Lane", type: "Peasant"},
     ];
 
-    return <Col style={{width: '368px'}}>
+    const updateUser = (name: string) => {
+        setLoading(true);
+    }
+
+    setTimeout(() => {
+            if (loading) {
+                setLoading(false);
+            }
+        },
+        5000);
+
+    return <Col style={{width: '368px', zIndex: 999}}>
         <div style={{padding: '20px'}}>
             <Row>
                 <img src={iconSettings} alt={'settings'}/>
@@ -36,10 +51,13 @@ export function EditUsers() {
                                 {user.type}
                             </Row>
                         </Col>
-                        <Switch className={cs([s.modalMiddleSwitch])}
-                                defaultChecked={user.type === 'Moderator'}
-                                size="small"
-                        />
+                        {loading ? <LoadingOutlined className={cs([s.modalMiddleSwitch])} style={{color: '#90DE2E'}}/>
+                            :
+                            <Switch className={cs([s.modalMiddleSwitch])}
+                                    defaultChecked={user.type === 'Moderator'}
+                                    size="small"
+                                    onChange={() => updateUser(user.name)}
+                            />}
                     </Row>
                     {users.length === index + 2 ? null : <Divider style={{margin: '22px 0'}}/>}
                 </div>

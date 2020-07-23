@@ -29,9 +29,9 @@ export function TransferForm() {
             >
                 <Form.Item
                     name="amount"
-                    rules={[{ required: true, message: 'Please input amount!' }]}
+                    rules={[{required: true, message: 'Please input amount!'}]}
                 >
-                    <Input prefix="Amount you want to send"  suffix="REDD" />
+                    <Input type={'number'} prefix="Amount you want to send"  suffix="REDD" />
                 </Form.Item>
                 <Form.Item
                     name="username"

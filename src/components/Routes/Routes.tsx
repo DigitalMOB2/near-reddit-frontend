@@ -1,5 +1,5 @@
 import {Route, Switch} from 'react-router-dom';
-import React, {useCallback} from 'react';
+import React from 'react';
 
 import {useApp} from '../App/App.context';
 import {RouteType} from '../route.type';

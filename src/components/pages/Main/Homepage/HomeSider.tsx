@@ -18,11 +18,11 @@ export function HomeSider() {
     const authCtx = useAuth();
 
     const users: any = [
-        {name: "Theresa Webb", type: "Owner", balance: "1,478,095.00"},
-        {name: "Eleanor Pena", type: "Moderator", balance: "4,067.50"},
-        {name: "Courtney Henry", type: "Peasant", balance: "0"},
-        {name: "Leslie Alexander", type: "Peasant", balance: "10"},
-        {name: "Devon Lane", type: "Peasant", balance: "20"},
+        {name: "Theresa Webb", type: "Owner", balance: 1478095},
+        {name: "Eleanor Pena", type: "Moderator", balance: 4067.50},
+        {name: "Courtney Henry", type: "Peasant", balance: 0},
+        {name: "Leslie Alexander", type: "Peasant", balance: 10},
+        {name: "Devon Lane", type: "Peasant", balance: 20},
     ];
 
     setTimeout(() => {
