@@ -1,0 +1,7 @@
+.drawerHeaderTitle :global .ant-drawer-title {
+  color: var(--white) !important;
+}
+
+.drawerHeaderIcon :global .ant-drawer-close {
+  color: var(--white) !important;
+}

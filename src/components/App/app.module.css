@@ -130,7 +130,6 @@
   padding-top: 42px;
 }
 
-
 .modalTransferRowText {
   font-weight: 500;
   font-size: 16px;
@@ -182,6 +181,28 @@
   text-align: left;
 }
 
+.modalFakePostTitleWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 20px;
+}
+
+.modalFakePostButtonWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 24px;
+}
+
+.modalFakePostBottomText {
+  font-weight: 500;
+  font-size: 10px;
+  line-height: 14px;
+  letter-spacing: 0.02em;
+  padding-top: 16px;
+}
+
 .modalFakePostTitle {
   font-weight: normal;
   font-size: 16px;
@@ -197,6 +218,14 @@
 .modalShopBuyButton {
   position: absolute;
   left: 78%;
+}
+
+.drawerTransferRowText {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  padding-top: 16px;
+  padding-bottom: 16px;
 }
 
 .menu {

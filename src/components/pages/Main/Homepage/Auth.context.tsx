@@ -11,6 +11,8 @@ const LOCAL_STORAGE_CUSTOMER_TYPE = 'near_customer_type';
 export type AuthStateType = {
     isLoggedIn: boolean,
     isSpinning: boolean,
+    visibleTransferForm: boolean,
+    visibleMintForm: boolean,
     customerName: string,
     customerType: string,
     customerBalance: string,
@@ -32,6 +34,8 @@ export type AuthContextType = {
     getCustomerType: () => string,
     setUser: (user: UserType) => void,
     setSpinning: (spinning: boolean) => void
+    setVisibleTransferForm: (visibleTransferForm: boolean) => void
+    setVisibleMintForm: (visibleMintForm: boolean) => void
 }
 
 export function AuthProvider(props: any) {
@@ -44,6 +48,8 @@ export function AuthProvider(props: any) {
         customerBalance: '',
         showModal: false,
         isSpinning: false,
+        visibleTransferForm: false,
+        visibleMintForm: false,
         user: {}
     });
 
@@ -72,9 +78,25 @@ export function AuthProvider(props: any) {
     const setSpinning = useCallback((spinning: boolean) => {
         setState({
             ...state,
-            isSpinning: spinning
+            isSpinning: spinning,
+            visibleTransferForm: false,
+            visibleMintForm: false
         })
-    }, [])
+    }, [state.visibleMintForm, state.visibleTransferForm, state.showModal])
+
+    const setVisibleTransferForm = useCallback((visibleTransferForm: boolean) => {
+        setState({
+            ...state,
+            visibleTransferForm: visibleTransferForm
+        })
+    }, [state.showModal])
+
+    const setVisibleMintForm = useCallback((visibleMintForm: boolean) => {
+        setState({
+            ...state,
+            visibleMintForm: visibleMintForm
+        })
+    }, [state.showModal])
 
     const logout = useCallback(() => {
         setState({
@@ -91,7 +113,9 @@ export function AuthProvider(props: any) {
         return localStorage.getItem(LOCAL_STORAGE_CUSTOMER_TYPE);
     }, []);
 
-    const value: AuthContextType = {state, setAuthResponse, logout, getCustomerName, getCustomerType, setUser, setSpinning};
+    const value: AuthContextType = {state, setAuthResponse, logout, getCustomerName,
+        getCustomerType, setUser, setSpinning,
+        setVisibleTransferForm, setVisibleMintForm};
 
     return <AuthContext.Provider value={value}>
         {props.children}

@@ -25362,6 +25362,50 @@ flex-start {
   top: 4px;
   left: 4px;
 }
+.ant-modal-mask {
+  background-color: rgba(0, 0, 0, 0.85);
+}
+.ant-modal-content {
+  border-radius: 32px;
+}
+.ant-drawer-bottom.ant-drawer-open .ant-drawer-content-wrapper {
+  box-shadow: none;
+}
+.ant-drawer-content-wrapper {
+  height: 386px;
+}
+.ant-drawer-body {
+  padding: 0;
+}
+.ant-input-affix-wrapper {
+  display: block;
+  height: 64px;
+  width: 288px;
+}
+.ant-input-prefix {
+  margin-top: -16px;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0.02em;
+  color: #B5ADAD;
+  font-style: normal;
+  font-weight: normal;
+}
+.ant-input {
+  width: 30%;
+}
+.ant-input-suffix {
+  top: 32px;
+  left: 90px;
+  position: absolute;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0.02em;
+  color: #B5ADAD;
+}
+.ant-input-affix-wrapper > input.ant-input {
+  padding: 3px 0 0 0;
+}
 .ant-layout-sider-trigger {
   color: var(--black);
   background: var(--white);

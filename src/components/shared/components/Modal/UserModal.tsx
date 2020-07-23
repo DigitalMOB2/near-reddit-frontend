@@ -1,5 +1,5 @@
-import React from "react";
-import {Modal, Form, Row, Divider, Col, Collapse, Button, Input} from "antd";
+import React, {useState} from "react";
+import {Modal, Form, Row, Divider, Col, Collapse, Button, Input, Drawer} from "antd";
 import cs from 'classnames';
 
 import iconOwner from '../../assets/icon-owner.svg';
@@ -9,42 +9,27 @@ import iconArrowBlue from '../../assets/icon-arrow-blue.svg';
 import iconPlus from '../../assets/icon-plus-green.svg';
 import arrowUpGrey from '../../assets/arrow-up-grey.svg';
 
-import { layout, tailLayout } from './FormLayout';
 import s from '../../../App/app.module.css';
 import {useAuth} from '../../../pages/Main/Homepage/Auth.context';
 import {EditUsers} from './EditUsers';
 import {ShopItems} from './ShopItems';
 import {TestTransactions} from './TestTransactions';
 import {FakePosts} from './FakePosts';
-
-const { Panel } = Collapse;
+import {TransferForm} from './TransferForm';
+import {MintForm} from './MintForm';
 
 export function UserModal() {
+    const myElem = React.createRef<HTMLDivElement>();
+
     const authCtx = useAuth();
 
-    const customExpandIcon = (props: any) =>{
-        if (props.isActive) {
-            return (
-                <img src={arrowUpGrey} alt={'up'} style={{transform: 'rotate(180deg)', opacity: 0.4}}/>
-            );
-        } else {
-            return (
-                <img src={arrowUpGrey} alt={'down'} style={{opacity: 0.4}}/>
-            );
-        }
-    }
+    const showTransferDrawer = () => {
+        authCtx.setVisibleTransferForm(true);
+    };
 
-    const customExpandIconMint = (props: any) => {
-        if (props.isActive) {
-            return (
-                <img src={arrowUpGrey} alt={'up'} style={{transform: 'rotate(180deg)', opacity: 0.4}}/>
-            );
-        } else {
-            return (
-                <img src={arrowUpGrey} alt={'down'} style={{opacity: 0.4}}/>
-            );
-        }
-    }
+    const showMintDrawer = () => {
+        authCtx.setVisibleMintForm(true);
+    };
 
     const closeModal = () => {
         authCtx.setSpinning(true);
@@ -60,12 +45,36 @@ export function UserModal() {
         >
             <Row className={cs([s.modalContainer])}>
                 <Col style={{width: '368px'}}>
+                    <div ref={myElem}/>
                     <div style={{padding: '20px'}}>
                         <Row>
                             <img src={authCtx.state.customerType === 'Owner' ?
                                 iconOwner : authCtx.state.customerType === 'Moderator' ?
                                     iconModerator : iconPeasant} alt={authCtx.state.customerType}/>
                         </Row>
+
+                        {authCtx.state.visibleTransferForm && <Drawer
+                            height={380}
+                            placement={'bottom'}
+                            closable={false}
+                            visible={authCtx.state.visibleTransferForm}
+                            getContainer={() => myElem.current}
+                            style={{ position: "relative", zIndex: 90, top: '474px'}}
+                        >
+                            {<TransferForm/>}
+                        </Drawer>}
+
+                        {authCtx.state.visibleMintForm && <Drawer
+                            height={380}
+                            placement={'bottom'}
+                            closable={false}
+                            visible={authCtx.state.visibleMintForm}
+                            getContainer={() => myElem.current}
+                            style={{ position: "relative", zIndex: 90, top: '474px'}}
+                        >
+                            {<MintForm/>}
+                        </Drawer>}
+
                         <Row className={cs([s.modalTextTitle])}>
                             Hi {authCtx.state.customerName},
                         </Row>
@@ -76,79 +85,26 @@ export function UserModal() {
                             {authCtx.state.customerBalance} <div className={cs([s.modalTokenName])}>REDD</div>
                         </Row>
                         <Divider />
-                        <Row className={cs([s.loginUsersRow])}>
-                            <Collapse bordered={false}
-                                      expandIconPosition={'right'}
-                                      expandIcon={(props) => customExpandIcon(props)}
-                                      destroyInactivePanel={true}
-                                      ghost={true}>
-                                <Panel extra={<img src={iconArrowBlue} alt={'arrow-blue'}/>} header="Transfer tokens" key="1">
-                                    <Form
-                                        {...layout}
-                                        name="basic"
-                                        size="small"
-                                    >
-                                        <Form.Item
-                                            label="User"
-                                            name="user"
-                                            rules={[{ required: true, message: 'Please input user!' }]}
-                                        >
-                                            <Input placeholder="User" />
-                                        </Form.Item>
-
-                                        <Form.Item
-                                            label="Tokens"
-                                            name="tokens"
-                                            rules={[{ required: true, message: 'Please input token amount!' }]}
-                                        >
-                                            <Input type="number" placeholder="Token amount" />
-                                        </Form.Item>
-
-                                        <Form.Item {...tailLayout}>
-                                            <Button
-                                                type="primary"
-                                                htmlType="submit"
-                                            >
-                                                Transfer
-                                            </Button>
-                                        </Form.Item>
-                                    </Form>
-                                </Panel>
-                            </Collapse>
+                        <Row className={cs([s.loginUsersRow])} onClick={() => showTransferDrawer()}>
+                            <img src={iconArrowBlue} alt={'arrow-blue'}/>
+                            <Col className={cs([s.loginUserCol])}>
+                                <Row className={cs([s.modalTransferRowText])}>
+                                    Transfer tokens
+                                </Row>
+                            </Col>
+                            <img src={arrowUpGrey} alt={'down'} className={cs([s.loginIconRight, 'p-t-14'])} style={{opacity: 0.4}}/>
                         </Row>
+
                         {authCtx.state.customerType !== 'Peasant' && <div>
                             <Divider/>
-                            <Row className={cs([s.loginUsersRow])}>
-                                <Collapse bordered={false}
-                                          expandIconPosition={'right'}
-                                          expandIcon={(props) => customExpandIconMint(props)}
-                                          destroyInactivePanel={true}
-                                          ghost={true}>
-                                    <Panel extra={<img src={iconPlus} alt={'plus-green'}/>} header="Mint tokens" key="2">
-                                        <Form
-                                            {...layout}
-                                            name="basic"
-                                            size="small"
-                                        >
-                                            <Form.Item
-                                                label="Tokens"
-                                                name="tokens"
-                                                rules={[{ required: true, message: 'Please input token amount!' }]}
-                                            >
-                                                <Input type="number" placeholder="Token amount" />
-                                            </Form.Item>
-
-                                            <Form.Item {...tailLayout}>
-                                                <Button
-                                                    type="primary"
-                                                    htmlType="submit"
-                                                >
-                                                    Mint
-                                                </Button>
-                                            </Form.Item>
-                                        </Form>
-                                    </Panel>
-                                </Collapse>
+                            <Row className={cs([s.loginUsersRow])} onClick={() => showMintDrawer()}>
+                                <img src={iconPlus} alt={'plus-green'}/>
+                                <Col className={cs([s.loginUserCol])}>
+                                    <Row className={cs([s.modalTransferRowText])}>
+                                        Mint tokens
+                                    </Row>
+                                </Col>
+                                <img src={arrowUpGrey} alt={'down'} className={cs([s.loginIconRight, 'p-t-14'])} style={{opacity: 0.4}}/>
                             </Row>
                         </div>}
                     </div>
