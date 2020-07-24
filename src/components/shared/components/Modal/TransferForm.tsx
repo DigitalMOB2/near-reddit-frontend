@@ -1,18 +1,35 @@
-import React from "react";
-import {Col, Divider, Form, Row, Input, Button} from 'antd';
+import React, {useCallback} from "react";
+import {Col, Divider, Form, Row, Input, Button, AutoComplete} from 'antd';
 import cs from 'classnames';
 
 import s from '../../../App/app.module.css';
 import iconArrowBlue from '../../assets/icon-arrow-blue.svg';
 import iconArrowRightSubmit from '../../assets/arrow-right-submit.svg';
 import {useAuth} from '../../../pages/Main/Homepage/Auth.context';
+import {useFetch} from '../../hooks/useFetch';
+import {getBackendEndpoint} from '../../utilities/api';
+import {config} from '../../../../config';
 
 export function TransferForm() {
     const authCtx = useAuth();
 
+    const {
+        loading, error, post,
+    } = useFetch({
+        path: getBackendEndpoint('/transfer'),
+        load: false,
+    });
+
     const cancel = () => {
         authCtx.setVisibleTransferForm(false)
     };
+
+
+    const onFinish = useCallback(async (values: any) => {
+        post({'user_name1': authCtx.state.customerName, 'user_name2': values.username, 'value': values.amount})
+            .then(() => authCtx.setShouldGetBalance(true)).catch((error) => console.log(error));
+    }, [authCtx.state.customerName, authCtx.setShouldGetBalance]);
+
 
     return <Col>
         <Divider style={{margin: 0}}/>
@@ -26,6 +43,7 @@ export function TransferForm() {
                 className="login-form"
                 size={'middle'}
                 initialValues={{amount: '', username: ''}}
+                onFinish={onFinish}
             >
                 <Form.Item
                     name="amount"
@@ -37,8 +55,12 @@ export function TransferForm() {
                     name="username"
                     rules={[{ required: true, message: 'Please input username!' }]}
                 >
-                    <Input
-                        prefix="Recipient username"
+                    <AutoComplete
+                        options={config.userNames}
+                        filterOption={(inputValue, option) =>
+                            option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
+                        }
+                        children={<Input prefix="Recipient username"/>}
                     />
                 </Form.Item>
                 <Form.Item>

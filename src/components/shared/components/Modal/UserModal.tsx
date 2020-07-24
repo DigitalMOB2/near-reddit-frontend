@@ -1,7 +1,8 @@
-import React from "react";
-import {Modal,  Row, Divider, Col, Drawer} from "antd";
+import React, {useEffect} from "react";
+import {Modal, Row, Divider, Col, Drawer, Spin} from "antd";
 import cs from 'classnames';
 import numeral from 'numeral';
+import {LoadingOutlined} from '@ant-design/icons';
 
 import iconOwner from '../../assets/icon-owner.svg';
 import iconModerator from '../../assets/icon-moderator.svg';
@@ -18,11 +19,34 @@ import {TestTransactions} from './TestTransactions';
 import {FakePosts} from './FakePosts';
 import {TransferForm} from './TransferForm';
 import {MintForm} from './MintForm';
+import {config} from '../../../../config';
+import {useFetch} from '../../hooks/useFetch';
+import {getBackendEndpoint} from '../../utilities/api';
+
+const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
 export function UserModal() {
     const myElem = React.createRef<HTMLDivElement>();
 
     const authCtx = useAuth();
+
+    const {
+        loading, getWithParams
+    } = useFetch({
+        path: getBackendEndpoint('/get_balance'),
+        load: false,
+    });
+
+    useEffect(() => {
+        if (authCtx.state.shouldGetBalance) {
+            getWithParams({"user_name": authCtx.state.customerName}).then((data: any) => {
+                authCtx.setBalance(data.data);
+            }).catch((err) => {
+                authCtx.setShouldGetBalance(false)
+            })
+        }
+
+    }, [authCtx.setBalance, authCtx.state.shouldGetBalance, authCtx.state.customerName]);
 
     const showTransferDrawer = () => {
         authCtx.setVisibleTransferForm(true);
@@ -33,7 +57,7 @@ export function UserModal() {
     };
 
     const closeModal = () => {
-        authCtx.setSpinning(true);
+        authCtx.setShouldGetUsers(true);
     }
 
     return (
@@ -49,8 +73,8 @@ export function UserModal() {
                     <div ref={myElem}/>
                     <div style={{padding: '20px'}}>
                         <Row>
-                            <img src={authCtx.state.customerType === 'Owner' ?
-                                iconOwner : authCtx.state.customerType === 'Moderator' ?
+                            <img src={authCtx.state.customerType === config.userTypes.owner ?
+                                iconOwner : authCtx.state.customerType === config.userTypes.moderator ?
                                     iconModerator : iconPeasant} alt={authCtx.state.customerType}/>
                         </Row>
 
@@ -82,9 +106,11 @@ export function UserModal() {
                         <Row className={cs([s.modalSubText])}>
                             your account balance is ...
                         </Row>
-                        <Row className={cs([s.modalTextBalance])}>
-                            {numeral(authCtx.state.customerBalance).format('0,0.00')} <div className={cs([s.modalTokenName])}>REDD</div>
-                        </Row>
+                        <Spin tip="Loading..." indicator={antIcon} spinning={loading}>
+                            <Row className={cs([s.modalTextBalance])}>
+                                {numeral(authCtx.state.customerBalance).format('0,0.00')} <div className={cs([s.modalTokenName])}>REDD</div>
+                            </Row>
+                        </Spin>
                         <Divider />
                         <Row className={cs([s.loginUsersRow])} onClick={() => showTransferDrawer()}>
                             <img src={iconArrowBlue} alt={'arrow-blue'}/>
@@ -96,7 +122,7 @@ export function UserModal() {
                             <img src={arrowUpGrey} alt={'down'} className={cs([s.loginIconRight, 'p-t-14'])} style={{opacity: 0.4}}/>
                         </Row>
 
-                        {authCtx.state.customerType !== 'Peasant' && <div>
+                        {authCtx.state.customerType !== config.userTypes.user && <div>
                             <Divider/>
                             <Row className={cs([s.loginUsersRow])} onClick={() => showMintDrawer()}>
                                 <img src={iconPlus} alt={'plus-green'}/>
@@ -111,12 +137,12 @@ export function UserModal() {
                     </div>
                 </Col>
                 <Divider type={'vertical'} style={{height: '530px'}}/>
-                {authCtx.state.customerType === 'Owner' && <EditUsers/>}
-                {authCtx.state.customerType === 'Moderator' && <ShopItems/>}
-                {authCtx.state.customerType === 'Peasant' && <ShopItems/>}
+                {authCtx.state.customerType === config.userTypes.owner && <EditUsers/>}
+                {authCtx.state.customerType === config.userTypes.moderator && <ShopItems/>}
+                {authCtx.state.customerType === config.userTypes.user && <ShopItems/>}
                 <Divider type={'vertical'} style={{height: '530px'}}/>
-                {authCtx.state.customerType === 'Owner' && <TestTransactions/>}
-                {authCtx.state.customerType !== 'Owner' && <FakePosts/>}
+                {authCtx.state.customerType === config.userTypes.owner && <TestTransactions/>}
+                {authCtx.state.customerType !== config.userTypes.owner && <FakePosts/>}
             </Row>
 
 

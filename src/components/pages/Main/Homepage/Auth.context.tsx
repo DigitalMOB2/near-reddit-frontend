@@ -10,19 +10,22 @@ const LOCAL_STORAGE_CUSTOMER_TYPE = 'near_customer_type';
 
 export type AuthStateType = {
     isLoggedIn: boolean,
-    isSpinning: boolean,
+    shouldGetUsers: boolean,
+    shouldGetBalance: boolean,
     visibleTransferForm: boolean,
     visibleMintForm: boolean,
     customerName: string,
     customerType: string,
     customerBalance: number,
     user: {},
+    users: [],
+    items: [],
     showModal: boolean
 }
 
 export type UserType = {
-    name: string,
-    type: string,
+    user_name: string,
+    user_type: string,
     balance: number
 }
 
@@ -30,10 +33,12 @@ export type AuthContextType = {
     state: AuthStateType,
     setAuthResponse: (authResponse: AuthResponse) => void,
     logout: () => void,
-    getCustomerName: () => string,
-    getCustomerType: () => string,
     setUser: (user: UserType) => void,
-    setSpinning: (spinning: boolean) => void
+    setUsers: (users: []) => void,
+    setItems: (items: []) => void,
+    setShouldGetUsers: (shouldGetUsers: boolean) => void
+    setShouldGetBalance: (shouldGetBalance: boolean) => void
+    setBalance: (balance: number) => void
     setVisibleTransferForm: (visibleTransferForm: boolean) => void
     setVisibleMintForm: (visibleMintForm: boolean) => void
 }
@@ -47,10 +52,13 @@ export function AuthProvider(props: any) {
         customerType: '',
         customerBalance: 0,
         showModal: false,
-        isSpinning: false,
+        shouldGetUsers: false,
+        shouldGetBalance: false,
         visibleTransferForm: false,
         visibleMintForm: false,
-        user: {}
+        user: {},
+        users: [],
+        items: []
     });
 
     const setAuthResponse = useCallback((authResponse: AuthResponse) => {
@@ -69,20 +77,54 @@ export function AuthProvider(props: any) {
         setState({
             ...state,
             showModal: true,
-            customerName: user.name,
-            customerType: user.type,
-            customerBalance: user.balance,
+            customerName: user.user_name,
+            customerType: user.user_type,
+            customerBalance: user.balance
         });
     }, [state]);
 
-    const setSpinning = useCallback((spinning: boolean) => {
+    const setUsers = useCallback((users: []) => {
         setState({
             ...state,
-            isSpinning: spinning,
-            visibleTransferForm: false,
+            users: users,
+            shouldGetUsers: false,
             visibleMintForm: false
+        });
+    }, [state]);
+
+    const setItems = useCallback((items: []) => {
+        setState({
+            ...state,
+            items: items,
+        });
+    }, [state]);
+
+    const setBalance = useCallback((balance: number) => {
+        setState({
+            ...state,
+            customerBalance: balance,
+            shouldGetBalance: false
+        });
+    }, [state]);
+
+    const setShouldGetUsers = useCallback((spinning: boolean) => {
+        setState({
+            ...state,
+            shouldGetUsers: spinning,
+            visibleTransferForm: false,
+            visibleMintForm: false,
+            shouldGetBalance: false
         })
-    }, [state])
+    }, [state]);
+
+    const setShouldGetBalance = useCallback((shouldGetBalance: boolean) => {
+        setState({
+            ...state,
+            shouldGetBalance: shouldGetBalance,
+            visibleMintForm: false,
+            visibleTransferForm: false
+        })
+    }, [state]);
 
     const setVisibleTransferForm = useCallback((visibleTransferForm: boolean) => {
         setState({
@@ -105,17 +147,8 @@ export function AuthProvider(props: any) {
         })
     }, [state]);
 
-    const getCustomerName = useCallback(() => {
-        return localStorage.getItem(LOCAL_STORAGE_CUSTOMER_NAME);
-    }, []);
-
-    const getCustomerType = useCallback(() => {
-        return localStorage.getItem(LOCAL_STORAGE_CUSTOMER_TYPE);
-    }, []);
-
-    const value: AuthContextType = {state, setAuthResponse, logout, getCustomerName,
-        getCustomerType, setUser, setSpinning,
-        setVisibleTransferForm, setVisibleMintForm};
+    const value: AuthContextType = {state, setAuthResponse, logout, setUser, setShouldGetUsers,
+        setVisibleTransferForm, setVisibleMintForm, setUsers, setItems, setShouldGetBalance, setBalance};
 
     return <AuthContext.Provider value={value}>
         {props.children}

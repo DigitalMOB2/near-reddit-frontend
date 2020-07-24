@@ -37,11 +37,16 @@ export const useFetch = (options: FetchOptionsType = {}) => {
 
     const remove = useCallback((...args) => {
         const requestParams = buildRequestParams(args);
-        return apiInstance.delete(requestParams[0], requestParams[1]);
-    }, [options.path]);
+        return apiInstance.delete(requestParams[0], {data: requestParams[1]});
+    }, []);
 
     const get = useCallback((url = options.path) => {
         return apiInstance.get(url);
+    }, []);
+
+    const getWithParams = useCallback((...args) => {
+        const requestParams = buildRequestParams(args);
+        return apiInstance.get(requestParams[0], {params: requestParams[1]});
     }, []);
 
     const buildRequestParams: any = useCallback((args: any) => {
@@ -67,7 +72,8 @@ export const useFetch = (options: FetchOptionsType = {}) => {
     }, []);
 
     apiService.setRequestHeaders({
-        xsrfCookieName: 'xsrfCookieName'
+        "Access-Control-Allow-Credentials": "true",
+        "Access-Control-Allow-Origin": "*"
     });
 
     apiService.loadRequestInterceptor(
@@ -118,5 +124,5 @@ export const useFetch = (options: FetchOptionsType = {}) => {
         }
     }, []);
 
-    return { responseData, loading, response, error, put, get, post, patch, remove };
+    return { responseData, loading, response, error, put, get, post, patch, remove, getWithParams };
 };

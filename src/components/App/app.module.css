@@ -255,6 +255,15 @@
 .modalShopBuyButton {
   position: absolute;
   left: 78%;
+  color: #90DE2E;
+  border-color: #90DE2E;
+}
+
+.modalShopBuyButton {
+  position: absolute;
+  left: 78%;
+  color: #90DE2E;
+  border-color: #90DE2E;
 }
 
 .drawerTransferRowText {

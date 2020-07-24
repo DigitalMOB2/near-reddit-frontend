@@ -25392,16 +25392,30 @@ flex-start {
   font-weight: normal;
 }
 .ant-input {
-  width: 30%;
+  width: 50%;
 }
 .recharts-wrapper {
   position: absolute;
   top: 50px;
   left: -242px;
 }
+.ant-select-single .ant-select-selector .ant-select-selection-search-input {
+  width: 288px;
+}
+.ant-select-dropdown {
+  width: 288px !important;
+  min-width: 288px !important;
+}
+.ant-btn[disabled],
+.ant-btn[disabled]:hover,
+.ant-btn[disabled]:focus,
+.ant-btn[disabled]:active {
+  background: white;
+  width: 60px;
+}
 .ant-input-suffix {
   top: 32px;
-  left: 90px;
+  left: 140px;
   position: absolute;
   font-size: 12px;
   line-height: 16px;
@@ -25421,15 +25435,16 @@ flex-start {
 .ant-menu-item a {
   color: var(--white);
 }
+.ant-divider-horizontal {
+  margin: 22px 0;
+}
 body {
   font-weight: 500;
 }
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-  /* display: none; <- Crashes Chrome on hover */
   -webkit-appearance: none;
   margin: 0;
-  /* <-- Apparently some margin are still there even though it's hidden */
 }
 input[type=number] {
   -moz-appearance: textfield;

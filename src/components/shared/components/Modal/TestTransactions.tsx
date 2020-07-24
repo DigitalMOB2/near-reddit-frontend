@@ -20,17 +20,20 @@ export function TestTransactions() {
     const [start, setStart] = React.useState(false);
     const [loading, setLoading] = React.useState(false);
 
-        React.useEffect(() => {
-            let timer: any;
-            let timerMin: any;
-            if (seconds < 59 && start) {
-                timer = setInterval(() => setSeconds(seconds + 1), 1000);
-            } else if (start) {
-                timerMin = setInterval(() => setMinutes(minutes + 1), 1000);
-                timer = setInterval(() => setSeconds(0), 1000);
-            }
-            return () => {clearInterval(timer); clearInterval(timerMin)};
-        }, [seconds, minutes, start]);
+    React.useEffect(() => {
+        let timer: any;
+        let timerMin: any;
+        if (seconds < 59 && start) {
+            timer = setInterval(() => setSeconds(seconds + 1), 1000);
+        } else if (start) {
+            timerMin = setInterval(() => setMinutes(minutes + 1), 1000);
+            timer = setInterval(() => setSeconds(0), 1000);
+        }
+        return () => {
+            clearInterval(timer);
+            clearInterval(timerMin)
+        };
+    }, [seconds, minutes, start]);
 
     const startTransactions = () => {
         setStart(true);

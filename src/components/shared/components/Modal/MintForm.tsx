@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useCallback} from "react";
 import {Col, Divider, Form, Row, Input, Button} from 'antd';
 import cs from 'classnames';
 
@@ -6,13 +6,27 @@ import s from '../../../App/app.module.css';
 import iconPlus from '../../assets/icon-plus-green.svg';
 import iconPlusSubmit from '../../assets/icon-plus-submit.svg';
 import {useAuth} from '../../../pages/Main/Homepage/Auth.context';
+import {useFetch} from '../../hooks/useFetch';
+import {getBackendEndpoint} from '../../utilities/api';
 
 export function MintForm() {
     const authCtx = useAuth();
 
+    const {
+        loading, error, post,
+    } = useFetch({
+        path: getBackendEndpoint('/mint'),
+        load: false,
+    });
+
     const cancel = () => {
         authCtx.setVisibleMintForm(false)
     };
+
+    const onFinish = useCallback(async (values: any) => {
+        post({'user_name': authCtx.state.customerName, 'value': values.amount})
+            .then(() => authCtx.setShouldGetBalance(true)).catch((error) => console.log(error));
+    }, [authCtx.state.customerName, authCtx.setShouldGetBalance]);
 
     return <Col>
         <Divider style={{margin: 0}}/>
@@ -26,6 +40,7 @@ export function MintForm() {
                 className="login-form"
                 size={'middle'}
                 initialValues={{amount: ''}}
+                onFinish={onFinish}
             >
                 <Form.Item
                     name="amount"
@@ -45,6 +60,7 @@ export function MintForm() {
                             htmlType="submit"
                             className="login-form-button"
                             style={{marginLeft: '63px', height: '40px', backgroundColor: '#90DE2E', borderColor: '#90DE2E'}}
+                            loading={loading}
                     >
                         Mint tokens <img src={iconPlusSubmit} alt={'arrow-right-submit'} className={'p-l-8'}/>
                     </Button>

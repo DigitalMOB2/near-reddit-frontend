@@ -1,5 +1,5 @@
 const defaultConfig = {
-    backendUrl: process.env.REACT_APP_BACKEND_URL,
+    backendUrl: process.env.REACT_APP_BACKEND_URL || 'http://188.166.164.13',
     i18n: {
         lng: 'en',
         fallbackLng: 'en',
@@ -7,16 +7,12 @@ const defaultConfig = {
     },
     routes: {
         homepage: '/',
-        users: '/users',
-        login: '/login',
-        addModerator: '/add-moderator',
-        removeModerator: '/remove-moderator',
-        transfer: '/transfer-tokens',
-        mint: '/mint-tokens',
-        purchase: '/purchase-item',
     },
     defaultEventsCount: 100,
-    defaultLanguageId: 1
+    defaultLanguageId: 1,
+    userTypes: {owner: 'owner', moderator: 'moderator', user: 'user'},
+    itemTypes: {silver: 'Silver Award', gold: 'Golden Award', platinum: 'Diamond Award'},
+    userNames: [{value: 'Deveon Lane'}, {value: 'Leslie Alexander'}, {value: 'Courtney Henry'}, {value: 'Eleanor Pena'}, {value: 'Theresa'}]
 };
 
 export const config = defaultConfig;
