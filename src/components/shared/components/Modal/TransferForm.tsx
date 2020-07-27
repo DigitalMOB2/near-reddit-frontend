@@ -1,4 +1,4 @@
-import React, {useCallback} from "react";
+import React, {useCallback, useState} from "react";
 import {Col, Divider, Form, Row, Input, Button, AutoComplete} from 'antd';
 import cs from 'classnames';
 
@@ -11,6 +11,9 @@ import {getBackendEndpoint} from '../../utilities/api';
 import {config} from '../../../../config';
 
 export function TransferForm() {
+    const [form] = Form.useForm();
+    const [disabled, setDisabled] = useState(false);
+
     const authCtx = useAuth();
 
     const {
@@ -30,6 +33,13 @@ export function TransferForm() {
             .then(() => authCtx.setShouldGetBalance(true)).catch((error) => console.log(error));
     }, [authCtx.state.customerName, authCtx.setShouldGetBalance]);
 
+    const updateAmount = () => {
+        if (authCtx.state.customerBalance < form.getFieldValue('amount')) {
+            setDisabled(true);
+        } else if (authCtx.state.customerBalance > form.getFieldValue('amount')) {
+            setDisabled(false);
+        }
+    }
 
     return <Col>
         <Divider style={{margin: 0}}/>
@@ -39,6 +49,7 @@ export function TransferForm() {
                 Transfer tokens
             </Row>
             <Form
+                form={form}
                 name="normal_login"
                 className="login-form"
                 size={'middle'}
@@ -49,7 +60,7 @@ export function TransferForm() {
                     name="amount"
                     rules={[{required: true, message: 'Please input amount!'}]}
                 >
-                    <Input type={'number'} prefix="Amount you want to send"  suffix="REDD" />
+                    <Input onChange={() => updateAmount()} type={'number'} prefix="Amount you want to send"  suffix="REDD" />
                 </Form.Item>
                 <Form.Item
                     name="username"
@@ -74,8 +85,9 @@ export function TransferForm() {
                     <Button type="primary"
                             htmlType="submit"
                             className="login-form-button"
-                            style={{marginLeft: loading ? '43px' : '63px', height: '40px', backgroundColor: '#147EFF'}}
+                            style={{marginLeft: loading ? '43px' : '63px', height: '40px', width: '145px', color: 'white', backgroundColor: disabled ? '#B5ADAD' : '#147EFF'}}
                             loading={loading}
+                            disabled={disabled}
                     >
                         Send tokens <img src={iconArrowRightSubmit} alt={'arrow-right-submit'} className={'p-l-8'}/>
                     </Button>
