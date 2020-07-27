@@ -8,6 +8,7 @@ import {
 
 import s from '../../../App/app.module.css';
 import iconArrowStartTransactions from '../../assets/icon-start-transactions.svg';
+import iconGraphBlank from '../../assets/icon-graph-blank.svg';
 
 const data = [
     { name: 'Group A', value: 300 },
@@ -17,27 +18,55 @@ const COLORS = ['#0071F6', '#0071F6', '#0071F6', '#0071F6'];
 export function TestTransactions() {
     const [seconds, setSeconds] = React.useState(0);
     const [minutes, setMinutes] = React.useState(0);
+    const [graph, setGraph] = React.useState(180);
+    const [txs, setTxs] = React.useState(0);
     const [start, setStart] = React.useState(false);
     const [loading, setLoading] = React.useState(false);
 
     React.useEffect(() => {
         let timer: any;
         let timerMin: any;
+
         if (seconds < 59 && start) {
             timer = setInterval(() => setSeconds(seconds + 1), 1000);
         } else if (start) {
             timerMin = setInterval(() => setMinutes(minutes + 1), 1000);
             timer = setInterval(() => setSeconds(0), 1000);
         }
+
         return () => {
             clearInterval(timer);
-            clearInterval(timerMin)
+            clearInterval(timerMin);
         };
     }, [seconds, minutes, start]);
 
+    React.useEffect(() => {
+        let setter: any;
+
+        if (start && graph > 0) {
+            setter = setInterval(() => {
+                setGraph(graph - 60)
+                setTxs(txs + 1250)
+            }, 10000);
+        } else {
+            setStart(false);
+            setLoading(false);
+        }
+
+        return () => {
+            clearInterval(setter);
+        };
+    }, [start, graph, txs]);
+
+
+
     const startTransactions = () => {
+        setSeconds(0);
+        setMinutes(0);
         setStart(true);
         setLoading(true);
+        setGraph(180);
+        setTxs(0);
     }
 
     return <Col style={{width: '368px'}} className={cs([s.modalFakePostContainer, s.modalFakePostTitleWrapper])}>
@@ -45,13 +74,14 @@ export function TestTransactions() {
             Test the scalability of transactions
         </Row>
         <Row className={cs([s.testTransactionsGraph])}>
+            <img src={iconGraphBlank} alt={'icon-blank'} style={{position: 'absolute', top: '175px', left: '105px'}}/>
             <PieChart width={800} height={400}>
                 <Pie
                     data={data}
                     cx={420}
                     cy={200}
                     startAngle={180}
-                    endAngle={40}
+                    endAngle={graph}
                     innerRadius={60}
                     outerRadius={80}
                     fill="#8884d8"
@@ -68,7 +98,7 @@ export function TestTransactions() {
             {minutes < 10 ? '0' + minutes : minutes} : {seconds < 10 ? '0' + seconds : seconds}
         </Row>
         <Row className={cs([s.testTransactionsNumberText])}>
-            5677
+            {txs}
         </Row>
         <Row className={cs([s.testTransactionsText])}>
             Transactions

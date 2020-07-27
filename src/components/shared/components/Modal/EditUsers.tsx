@@ -39,11 +39,11 @@ export function EditUsers() {
     const updateUser = (name: string, type: string) => {
         if (type === 'moderator') {
             return remove({'user_name': name}).then(() => {
-                get().then((data: any) => {
-                    authCtx.setUsers(data.data);
-                }).catch((err) => {
-                    console.log(err)
-                })
+                    get().then((data: any) => {
+                        authCtx.setUsers(data.data);
+                    }).catch((err) => {
+                        console.log(err)
+                    })
                 }
             ).catch((error) => console.log(error));
         }
@@ -58,6 +58,21 @@ export function EditUsers() {
         ).catch((error) => console.log(error));
     }
 
+    const sortFunction = (a: any, b: any) => {
+        const nameA = a.user_name.toUpperCase();
+        const nameB = b.user_name.toUpperCase();
+        if (nameA < nameB) {
+            return -1;
+        }
+        if (nameA > nameB) {
+            return 1;
+        }
+
+        return 0;
+    }
+
+
+
     return <Col style={{width: '368px', zIndex: 999}}>
         <div style={{padding: '20px'}}>
             <Row>
@@ -67,7 +82,8 @@ export function EditUsers() {
                 Edit user permissions
             </Row>
             <Divider style={{margin: '18px 0'}}/>
-            {authCtx.state.users !== [] && authCtx.state.users.filter((user: any) => user.user_type !== 'owner').map((user: any, index: number) => {
+            {authCtx.state.users !== [] && authCtx.state.users.filter((user: any) => user.user_type !== 'owner')
+                .sort((a, b) => sortFunction(a, b)).map((user: any, index: number) => {
                 return <div key={index} style={{height: '85px'}}>
                     <Row className={cs([s.loginUsersRow])}>
                         <img src={user.user_type === 'moderator' ? iconModerator : iconPeasant} alt={user.user_type}/>
