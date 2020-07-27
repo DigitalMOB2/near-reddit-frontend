@@ -74,7 +74,8 @@ export function TransferForm() {
                     <Button type="primary"
                             htmlType="submit"
                             className="login-form-button"
-                            style={{marginLeft: '63px', height: '40px', backgroundColor: '#147EFF'}}
+                            style={{marginLeft: loading ? '43px' : '63px', height: '40px', backgroundColor: '#147EFF'}}
+                            loading={loading}
                     >
                         Send tokens <img src={iconArrowRightSubmit} alt={'arrow-right-submit'} className={'p-l-8'}/>
                     </Button>

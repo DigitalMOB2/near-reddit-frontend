@@ -98,7 +98,7 @@ export function ShopItems() {
                             <Button className={cs([s.modalShopBuyButton])}
                                     shape="round"
                                     onClick={() => purchase(item.item_name)}
-
+                                    disabled={authCtx.state.customerBalance < item.price}
                             >
                                 Buy
                             </Button>

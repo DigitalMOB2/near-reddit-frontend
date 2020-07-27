@@ -48,6 +48,7 @@ export function FakePosts() {
                         className="login-form-button"
                         style={{height: '40px', backgroundColor: '#147EFF'}}
                         onClick={() => award()}
+                        loading={loading}
                 >
                     Send award <img src={iconArrowStarSubmit} alt={'arrow-star-submit'} className={'p-l-8 p-b-4'}/>
                 </Button>
