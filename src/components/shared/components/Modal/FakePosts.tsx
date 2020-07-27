@@ -28,6 +28,10 @@ export function FakePosts() {
                 }).catch((error) => console.log(error));
     }, [authCtx.state.customerName, authCtx.setShouldGetBalance]);
 
+    const isDisabled = () => {
+        return authCtx.state.customerBalance < 100;
+    }
+
     return <Col style={{width: '368px'}} className={cs([s.modalFakePostContainer])}>
         <div className={cs([s.modalFakePostTitleWrapper])}>
             <Row>
@@ -46,9 +50,10 @@ export function FakePosts() {
                 <Button type="primary"
                         htmlType="submit"
                         className="login-form-button"
-                        style={{height: '40px', backgroundColor: '#147EFF'}}
+                        style={{height: '40px', width: '140px', color: 'white', backgroundColor: isDisabled() ? '#B5ADAD' : '#147EFF'}}
                         onClick={() => award()}
                         loading={loading}
+                        disabled={isDisabled()}
                 >
                     Send award <img src={iconArrowStarSubmit} alt={'arrow-star-submit'} className={'p-l-8 p-b-4'}/>
                 </Button>
