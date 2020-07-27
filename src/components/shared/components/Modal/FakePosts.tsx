@@ -50,7 +50,7 @@ export function FakePosts() {
                 <Button type="primary"
                         htmlType="submit"
                         className="login-form-button"
-                        style={{height: '40px', width: '140px', color: 'white', backgroundColor: isDisabled() ? '#B5ADAD' : '#147EFF'}}
+                        style={{height: '40px', width: '160px', color: 'white', backgroundColor: isDisabled() ? '#B5ADAD' : '#147EFF'}}
                         onClick={() => award()}
                         loading={loading}
                         disabled={isDisabled()}
