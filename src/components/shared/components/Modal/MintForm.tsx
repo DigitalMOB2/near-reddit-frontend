@@ -59,10 +59,10 @@ export function MintForm() {
                     <Button type="primary"
                             htmlType="submit"
                             className="login-form-button"
-                            style={{marginLeft: '63px', height: '40px', backgroundColor: '#90DE2E', borderColor: '#90DE2E'}}
+                            style={{marginLeft: '69px', height: '40px', width: '140px', backgroundColor: '#90DE2E', borderColor: '#90DE2E'}}
                             loading={loading}
                     >
-                        Mint tokens <img src={iconPlusSubmit} alt={'arrow-right-submit'} className={'p-l-8'}/>
+                        Mint tokens {!loading && <img src={iconPlusSubmit} alt={'arrow-right-submit'} className={'p-l-8'}/>}
                     </Button>
                 </Form.Item>
             </Form>

@@ -85,11 +85,11 @@ export function TransferForm() {
                     <Button type="primary"
                             htmlType="submit"
                             className="login-form-button"
-                            style={{marginLeft: loading ? '43px' : '63px', height: '40px', width: '145px', color: 'white', backgroundColor: disabled ? '#B5ADAD' : '#147EFF'}}
+                            style={{marginLeft: '63px', height: '40px', width: '145px', color: 'white', backgroundColor: disabled ? '#B5ADAD' : '#147EFF'}}
                             loading={loading}
                             disabled={disabled}
                     >
-                        Send tokens <img src={iconArrowRightSubmit} alt={'arrow-right-submit'} className={'p-l-8'}/>
+                        Send tokens {!loading && <img src={iconArrowRightSubmit} alt={'arrow-right-submit'} className={'p-l-8'}/>}
                     </Button>
                 </Form.Item>
             </Form>
