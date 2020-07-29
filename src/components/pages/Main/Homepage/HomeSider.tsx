@@ -27,6 +27,7 @@ export function HomeSider() {
     } = useFetch({
         path: getBackendEndpoint('/list_users'),
         load: true,
+        modal: false
     });
 
     useEffect(() => {

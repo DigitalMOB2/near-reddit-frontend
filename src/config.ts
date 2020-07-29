@@ -1,5 +1,5 @@
 const defaultConfig = {
-    backendUrl: process.env.REACT_APP_BACKEND_URL || 'http://188.166.164.13',
+    backendUrl: 'http://188.166.164.13',
     i18n: {
         lng: 'en',
         fallbackLng: 'en',

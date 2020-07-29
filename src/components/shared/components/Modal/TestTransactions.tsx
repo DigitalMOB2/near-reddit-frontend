@@ -9,6 +9,7 @@ import {
 import s from '../../../App/app.module.css';
 import iconArrowStartTransactions from '../../assets/icon-start-transactions.svg';
 import iconGraphBlank from '../../assets/icon-graph-blank.svg';
+import {useAuth} from '../../../pages/Main/Homepage/Auth.context';
 
 const data = [
     { name: 'Group A', value: 300 },
@@ -16,6 +17,8 @@ const data = [
 const COLORS = ['#0071F6', '#0071F6', '#0071F6', '#0071F6'];
 
 export function TestTransactions() {
+    const authCtx = useAuth();
+
     const [seconds, setSeconds] = React.useState(0);
     const [minutes, setMinutes] = React.useState(0);
     const [graph, setGraph] = React.useState(180);
@@ -51,6 +54,9 @@ export function TestTransactions() {
         } else {
             setStart(false);
             setLoading(false);
+            if (start) {
+                authCtx.setShowResponse(true, '');
+            }
         }
 
         return () => {

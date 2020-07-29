@@ -20,7 +20,11 @@ export type AuthStateType = {
     user: {},
     users: [],
     items: [],
-    showModal: boolean
+    showModal: boolean,
+    showError: boolean,
+    error: string,
+    showResponse: boolean,
+    response: string
 }
 
 export type UserType = {
@@ -37,10 +41,13 @@ export type AuthContextType = {
     setUsers: (users: []) => void,
     setItems: (items: []) => void,
     setShouldGetUsers: (shouldGetUsers: boolean) => void
-    setShouldGetBalance: (shouldGetBalance: boolean) => void
+    setShouldGetBalance: (shouldGetBalance: boolean, showResponse: boolean, response: string) => void
     setBalance: (balance: number) => void
     setVisibleTransferForm: (visibleTransferForm: boolean) => void
     setVisibleMintForm: (visibleMintForm: boolean) => void
+    setShowError: (showError: boolean, error: string, modal: boolean) => void
+    setShowResponse: (showResponse: boolean, response: string) => void
+    setShowResponseUsers: (showResponse: boolean, response: string, users: []) => void
 }
 
 export function AuthProvider(props: any) {
@@ -58,7 +65,11 @@ export function AuthProvider(props: any) {
         visibleMintForm: false,
         user: {},
         users: [],
-        items: []
+        items: [],
+        showError: false,
+        error: '',
+        showResponse: false,
+        response: ''
     });
 
     const setAuthResponse = useCallback((authResponse: AuthResponse) => {
@@ -113,16 +124,22 @@ export function AuthProvider(props: any) {
             shouldGetUsers: spinning,
             visibleTransferForm: false,
             visibleMintForm: false,
-            shouldGetBalance: false
+            shouldGetBalance: false,
+            showError: false,
+            error: '',
+            showResponse: false,
+            response: ''
         })
     }, [state]);
 
-    const setShouldGetBalance = useCallback((shouldGetBalance: boolean) => {
+    const setShouldGetBalance = useCallback((shouldGetBalance: boolean, showResponse: boolean, response: string) => {
         setState({
             ...state,
             shouldGetBalance: shouldGetBalance,
             visibleMintForm: false,
-            visibleTransferForm: false
+            visibleTransferForm: false,
+            showResponse: true,
+            response: response
         })
     }, [state]);
 
@@ -140,6 +157,32 @@ export function AuthProvider(props: any) {
         })
     }, [state])
 
+    const setShowError = useCallback((showError: boolean, error: string, modal: boolean) => {
+        setState({
+            ...state,
+            showError: showError,
+            error: error,
+            showModal: modal
+        })
+    }, [state])
+
+    const setShowResponse = useCallback((showResponse: boolean, response: string) => {
+        setState({
+            ...state,
+            showResponse: showResponse,
+            response: response,
+        })
+    }, [state])
+
+    const setShowResponseUsers = useCallback((showResponse: boolean, response: string, users: []) => {
+        setState({
+            ...state,
+            showResponse: showResponse,
+            response: response,
+            users: users
+        })
+    }, [state])
+
     const logout = useCallback(() => {
         setState({
             ...state,
@@ -148,7 +191,8 @@ export function AuthProvider(props: any) {
     }, [state]);
 
     const value: AuthContextType = {state, setAuthResponse, logout, setUser, setShouldGetUsers,
-        setVisibleTransferForm, setVisibleMintForm, setUsers, setItems, setShouldGetBalance, setBalance};
+        setVisibleTransferForm, setVisibleMintForm, setUsers, setItems,
+        setShouldGetBalance, setBalance, setShowError, setShowResponse, setShowResponseUsers};
 
     return <AuthContext.Provider value={value}>
         {props.children}

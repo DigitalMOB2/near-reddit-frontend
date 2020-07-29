@@ -15,16 +15,17 @@ export function FakePosts() {
     const authCtx = useAuth();
 
     const {
-        loading, error, post,
+        loading, post,
     } = useFetch({
         path: getBackendEndpoint('/transfer'),
         load: false,
+        modal: true
     });
 
     const award = useCallback(async () => {
         post({'user_name1': authCtx.state.customerName, 'user_name2': config.userNames[4].value, 'value': 100})
-            .then(() => {
-                    authCtx.setShouldGetBalance(true)
+            .then((response) => {
+                authCtx.setShouldGetBalance(true, true, response.data)
                 }).catch((error) => console.log(error));
     }, [authCtx.state.customerName, authCtx.setShouldGetBalance]);
 

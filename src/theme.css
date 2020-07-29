@@ -25362,6 +25362,18 @@ flex-start {
   top: 4px;
   left: 4px;
 }
+.ant-alert-error .ant-alert-icon {
+  color: #ffffff;
+}
+.ant-alert-message {
+  color: #ffffff;
+}
+a.ant-btn {
+  padding-top: 0;
+}
+.ant-modal {
+  top: 130px;
+}
 .ant-modal-mask {
   background-color: rgba(0, 0, 0, 0.85);
 }

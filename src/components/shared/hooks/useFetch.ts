@@ -64,7 +64,7 @@ export const useFetch = (options: FetchOptionsType = {}) => {
 
         if (error.response) {
             errorResponse = {
-                ...error.response.data,
+                message: error.response.data,
                 code: error.response.status
             };
         }
@@ -90,9 +90,7 @@ export const useFetch = (options: FetchOptionsType = {}) => {
             setResponseData(response.data);
         },
         (error: any) => {
-            if (!error.response || (error.response.data.statusCode === HttpCodes.UNAUTHORIZED)) {
-                authCtx.logout();
-            }
+            authCtx.setShowError(true, buildError(error).message, options.modal);
             setError(buildError(error));
             setLoading(false);
         });
@@ -111,6 +109,7 @@ export const useFetch = (options: FetchOptionsType = {}) => {
                     method,
                 });
             } catch(error) {
+                authCtx.setShowError(true, buildError(error).message, options.modal);
                 setLoading(false);
                 setError(buildError(error));
             }

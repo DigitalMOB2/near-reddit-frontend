@@ -17,6 +17,7 @@ export function MintForm() {
     } = useFetch({
         path: getBackendEndpoint('/mint'),
         load: false,
+        modal: true
     });
 
     const cancel = () => {
@@ -25,7 +26,8 @@ export function MintForm() {
 
     const onFinish = useCallback(async (values: any) => {
         post({'user_name': authCtx.state.customerName, 'value': values.amount})
-            .then(() => authCtx.setShouldGetBalance(true)).catch((error) => console.log(error));
+            .then((response) => authCtx.setShouldGetBalance(true,true, response.data))
+            .catch((error) => console.log(error));
     }, [authCtx.state.customerName, authCtx.setShouldGetBalance]);
 
     return <Col>

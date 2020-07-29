@@ -1,8 +1,8 @@
 import React, {useEffect} from "react";
-import {Modal, Row, Divider, Col, Drawer, Spin} from "antd";
+import {Modal, Row, Divider, Col, Drawer, Spin, Alert, Button, Form} from "antd";
 import cs from 'classnames';
 import numeral from 'numeral';
-import {LoadingOutlined} from '@ant-design/icons';
+import {LoadingOutlined, CloseOutlined} from '@ant-design/icons';
 
 import iconOwner from '../../assets/icon-owner.svg';
 import iconModerator from '../../assets/icon-moderator.svg';
@@ -10,6 +10,10 @@ import iconPeasant from '../../assets/icon-user.svg';
 import iconArrowBlue from '../../assets/icon-arrow-blue.svg';
 import iconPlus from '../../assets/icon-plus-green.svg';
 import arrowUpGrey from '../../assets/arrow-up-grey.svg';
+import iconResponse from '../../assets/icon-response.svg';
+import iconClose from '../../assets/icon-close.svg';
+import iconCloseWhite from '../../assets/icon-close-white.svg';
+import iconWarning from '../../assets/icon-warning.svg';
 
 import s from '../../../App/app.module.css';
 import {useAuth} from '../../../pages/Main/Homepage/Auth.context';
@@ -42,7 +46,7 @@ export function UserModal() {
             getWithParams({"user_name": authCtx.state.customerName}).then((data: any) => {
                 authCtx.setBalance(data.data);
             }).catch((err) => {
-                authCtx.setShouldGetBalance(false)
+                authCtx.setShouldGetBalance(false, false, '')
             })
         }
 
@@ -60,6 +64,14 @@ export function UserModal() {
         authCtx.setShouldGetUsers(true);
     }
 
+    const handleCloseError = () => {
+        authCtx.setShowError(false, '', true);
+    }
+
+    const handleCloseResponse = () => {
+        authCtx.setShowResponse(false, '');
+    }
+
     return (
         <Modal
             visible={authCtx.state.showModal}
@@ -68,6 +80,27 @@ export function UserModal() {
             width={1200}
             afterClose={() => closeModal()}
         >
+            {authCtx.state.showError && (
+                <div className={cs([s.alertErrorBanner])}>
+                <img src={iconWarning} alt={'error'}/>
+                <div className={cs([s.alertErrorBannerText])}>{authCtx.state.error}</div>
+                <img src={iconCloseWhite} alt={'close-white'} style={{opacity: 0.4, cursor: 'pointer'}} onClick={handleCloseError}/>
+                </div>
+            )}
+            {authCtx.state.showResponse && (
+                <div className={cs([s.responseBanner])}>
+                    <img src={iconResponse} alt={'response'}/>
+                    <div className={cs([s.responseBannerText])}>Your last transaction can be reviewed on the NEAR Blockchain Explorer</div>
+                    <Button type="primary"
+                            className={cs([s.responseBannerButton])}
+                            href={`https://explorer.testnet.near.org/transactions/3m7V8iwK3hhcvJAZYDiXbWfw6pf6EYraD7LyRFrH96QT`}
+                            target={'_blank'}
+                    >
+                        <span style={{paddingTop: '5px'}}>Open Explorer</span>
+                    </Button>
+                    <img src={iconClose} alt={'close'} style={{opacity: 0.4, cursor: 'pointer'}} onClick={handleCloseResponse}/>
+                </div>
+            )}
             <Row className={cs([s.modalContainer])}>
                 <Col style={{width: '368px'}}>
                     <div ref={myElem}/>

@@ -17,10 +17,11 @@ export function TransferForm() {
     const authCtx = useAuth();
 
     const {
-        loading, error, post,
+        loading, post,
     } = useFetch({
         path: getBackendEndpoint('/transfer'),
         load: false,
+        modal: true
     });
 
     const cancel = () => {
@@ -30,7 +31,8 @@ export function TransferForm() {
 
     const onFinish = useCallback(async (values: any) => {
         post({'user_name1': authCtx.state.customerName, 'user_name2': values.username, 'value': values.amount})
-            .then(() => authCtx.setShouldGetBalance(true)).catch((error) => console.log(error));
+            .then((response) => authCtx.setShouldGetBalance(true, true, response.data))
+            .catch((error) => console.log(error));
     }, [authCtx.state.customerName, authCtx.setShouldGetBalance]);
 
     const updateAmount = () => {

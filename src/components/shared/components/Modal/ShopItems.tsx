@@ -22,10 +22,11 @@ export function ShopItems() {
     const authCtx = useAuth();
 
     const {
-        loading, error, get, responseData,
+        loading, responseData,
     } = useFetch({
         path: getBackendEndpoint('/get_all_items'),
         load: true,
+        modal: true
     });
 
     const {
@@ -33,6 +34,7 @@ export function ShopItems() {
     } = useFetch({
         path: getBackendEndpoint('/get_user_items'),
         load: true,
+        modal: true
     });
 
     const {
@@ -40,6 +42,7 @@ export function ShopItems() {
     } = useFetch({
         path: getBackendEndpoint('/purchase'),
         load: false,
+        modal: true
     });
 
     useEffect(() => {
@@ -58,7 +61,7 @@ export function ShopItems() {
         post({"user_name": authCtx.state.customerName, "item_name": values})
             .then(() => getWithParams({"user_name": authCtx.state.customerName})
                 .then((response) => {
-                    authCtx.setShouldGetBalance(true)
+                    authCtx.setShouldGetBalance(true, true, response.data)
                     setItems(response.data)
                 })).catch((error) => console.log(error));
     }, [authCtx.state.customerName, authCtx.setShouldGetBalance]);
