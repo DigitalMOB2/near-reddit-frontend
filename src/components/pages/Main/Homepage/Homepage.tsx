@@ -125,7 +125,7 @@ export function Homepage() {
                 </div>
             </Row>
             <Row className={cs([s.loginSignModeratorText])}>
-                .. or sign in as a Moderator or Regular user to ...
+                ... or sign in as a Moderator or Regular user to ...
             </Row>
             <Row>
                 <div className={cs([s.loginBoxs])} onMouseEnter={() => showButton('reward')} onMouseLeave={() => hideButton('reward')}>
