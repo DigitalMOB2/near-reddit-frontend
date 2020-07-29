@@ -26,6 +26,7 @@ import {MintForm} from './MintForm';
 import {config} from '../../../../config';
 import {useFetch} from '../../hooks/useFetch';
 import {getBackendEndpoint} from '../../utilities/api';
+import {log} from 'util';
 
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
@@ -69,7 +70,7 @@ export function UserModal() {
     }
 
     const handleCloseResponse = () => {
-        authCtx.setShowResponse(false, '');
+        authCtx.setShowResponse(false, '', '');
     }
 
     return (
@@ -93,7 +94,11 @@ export function UserModal() {
                     <div className={cs([s.responseBannerText])}>Your last transaction can be reviewed on the NEAR Blockchain Explorer</div>
                     <Button type="primary"
                             className={cs([s.responseBannerButton])}
-                            href={`https://explorer.testnet.near.org/transactions/3m7V8iwK3hhcvJAZYDiXbWfw6pf6EYraD7LyRFrH96QT`}
+                            href={authCtx.state.link === '' ?
+                                `https://explorer.testnet.near.org/transactions/${authCtx.state.response}`
+                                :
+                                `https://explorer.testnet.near.org/accounts/${config.contract}`
+                            }
                             target={'_blank'}
                     >
                         <span style={{paddingTop: '5px'}}>Open Explorer</span>

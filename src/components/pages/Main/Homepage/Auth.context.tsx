@@ -24,7 +24,8 @@ export type AuthStateType = {
     showError: boolean,
     error: string,
     showResponse: boolean,
-    response: string
+    response: string,
+    link: string,
 }
 
 export type UserType = {
@@ -46,7 +47,7 @@ export type AuthContextType = {
     setVisibleTransferForm: (visibleTransferForm: boolean) => void
     setVisibleMintForm: (visibleMintForm: boolean) => void
     setShowError: (showError: boolean, error: string, modal: boolean) => void
-    setShowResponse: (showResponse: boolean, response: string) => void
+    setShowResponse: (showResponse: boolean, response: string, link: string) => void
     setShowResponseUsers: (showResponse: boolean, response: string, users: []) => void
 }
 
@@ -69,7 +70,8 @@ export function AuthProvider(props: any) {
         showError: false,
         error: '',
         showResponse: false,
-        response: ''
+        response: '',
+        link: ''
     });
 
     const setAuthResponse = useCallback((authResponse: AuthResponse) => {
@@ -160,17 +162,20 @@ export function AuthProvider(props: any) {
     const setShowError = useCallback((showError: boolean, error: string, modal: boolean) => {
         setState({
             ...state,
+            response: '',
+            showResponse: false,
             showError: showError,
             error: error,
             showModal: modal
         })
     }, [state])
 
-    const setShowResponse = useCallback((showResponse: boolean, response: string) => {
+    const setShowResponse = useCallback((showResponse: boolean, response: string, link: string) => {
         setState({
             ...state,
             showResponse: showResponse,
             response: response,
+            link: link
         })
     }, [state])
 

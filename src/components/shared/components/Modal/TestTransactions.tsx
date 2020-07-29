@@ -55,7 +55,7 @@ export function TestTransactions() {
             setStart(false);
             setLoading(false);
             if (start) {
-                authCtx.setShowResponse(true, '');
+                authCtx.setShowResponse(true, '', 'tests');
             }
         }
 

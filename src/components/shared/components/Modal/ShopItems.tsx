@@ -59,9 +59,9 @@ export function ShopItems() {
 
     const purchase = useCallback(async (values: any) => {
         post({"user_name": authCtx.state.customerName, "item_name": values})
-            .then(() => getWithParams({"user_name": authCtx.state.customerName})
+            .then((resp) => getWithParams({"user_name": authCtx.state.customerName})
                 .then((response) => {
-                    authCtx.setShouldGetBalance(true, true, response.data)
+                    authCtx.setShouldGetBalance(true, true, resp.data)
                     setItems(response.data)
                 })).catch((error) => console.log(error));
     }, [authCtx.state.customerName, authCtx.setShouldGetBalance]);
