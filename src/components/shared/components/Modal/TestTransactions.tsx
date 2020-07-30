@@ -68,8 +68,12 @@ export function TestTransactions() {
                 let progress: any;
                 progress = await getProgress().catch((error) => console.log(error))
                 if (progress) {
-                    setGraph( 180 - (progress.data.progress * 180))
-                    setTxs(progress.data.totalTx * progress.data.progress)
+                    let currentTxs = progress.data.currentTxCount;
+                    let totalTxs = progress.data.totalTx;
+                    let progressTxs = currentTxs / totalTxs;
+
+                    setGraph( 180 - (progressTxs * 180))
+                    setTxs(totalTxs * progressTxs)
                 }
             }, 3000);
         } else {
