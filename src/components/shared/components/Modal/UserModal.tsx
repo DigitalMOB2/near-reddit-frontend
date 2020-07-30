@@ -1,8 +1,8 @@
 import React, {useEffect} from "react";
-import {Modal, Row, Divider, Col, Drawer, Spin, Alert, Button, Form} from "antd";
+import {Modal, Row, Divider, Col, Drawer, Spin, Button} from "antd";
 import cs from 'classnames';
 import numeral from 'numeral';
-import {LoadingOutlined, CloseOutlined} from '@ant-design/icons';
+import {LoadingOutlined} from '@ant-design/icons';
 
 import iconOwner from '../../assets/icon-owner.svg';
 import iconModerator from '../../assets/icon-moderator.svg';
@@ -26,7 +26,6 @@ import {MintForm} from './MintForm';
 import {config} from '../../../../config';
 import {useFetch} from '../../hooks/useFetch';
 import {getBackendEndpoint} from '../../utilities/api';
-import {log} from 'util';
 
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 

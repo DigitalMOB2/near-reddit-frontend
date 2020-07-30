@@ -23,7 +23,7 @@ export function HomeSider() {
     const [load, setLoad] = useState(false);
 
     const {
-        loading, error, get, responseData,
+        loading, get, responseData,
     } = useFetch({
         path: getBackendEndpoint('/list_users'),
         load: true,

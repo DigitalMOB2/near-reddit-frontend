@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useState} from "react";
-import {Button, Col, Divider, Row, Spin, Switch} from 'antd';
+import {Button, Col, Divider, Row, Spin} from 'antd';
 import iconShop from '../../assets/icon-shop.svg';
 import cs from 'classnames';
 import numeral from 'numeral';

@@ -10,6 +10,9 @@ import s from '../../../App/app.module.css';
 import iconArrowStartTransactions from '../../assets/icon-start-transactions.svg';
 import iconGraphBlank from '../../assets/icon-graph-blank.svg';
 import {useAuth} from '../../../pages/Main/Homepage/Auth.context';
+import {useFetch} from '../../hooks/useFetch';
+import {getBackendEndpoint} from '../../utilities/api';
+import {config} from '../../../../config';
 
 const data = [
     { name: 'Group A', value: 300 },
@@ -18,6 +21,18 @@ const COLORS = ['#0071F6', '#0071F6', '#0071F6', '#0071F6'];
 
 export function TestTransactions() {
     const authCtx = useAuth();
+
+    const { get } = useFetch({
+        path: getBackendEndpoint('/start_benchmark'),
+        load: false,
+        modal: true
+    });
+
+    const { get: getProgress } = useFetch({
+        path: getBackendEndpoint('/get_benchmark_progress'),
+        load: false,
+        modal: true
+    });
 
     const [seconds, setSeconds] = React.useState(0);
     const [minutes, setMinutes] = React.useState(0);
@@ -47,16 +62,18 @@ export function TestTransactions() {
         let setter: any;
 
         if (start && graph > 0) {
-            setter = setInterval(() => {
-                setGraph(graph - 60)
-                setTxs(txs + 1250)
-            }, 10000);
+            setter = setInterval(async () => {
+                let progress: any;
+                progress = await getProgress().catch((error) => console.log(error))
+                setGraph( 180 - (progress.data.progress * 180))
+                setTxs(config.testTransactionNumber * progress.data.progress)
+            }, 3000);
         } else {
-            setStart(false);
-            setLoading(false);
             if (start) {
                 authCtx.setShowResponse(true, '', 'tests');
             }
+            setStart(false);
+            setLoading(false);
         }
 
         return () => {
@@ -66,13 +83,15 @@ export function TestTransactions() {
 
 
 
-    const startTransactions = () => {
+    const startTransactions = async () => {
         setSeconds(0);
         setMinutes(0);
         setStart(true);
         setLoading(true);
         setGraph(180);
         setTxs(0);
+
+        await get();
     }
 
     return <Col style={{width: '368px'}} className={cs([s.modalFakePostContainer, s.modalFakePostTitleWrapper])}>

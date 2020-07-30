@@ -1,6 +1,5 @@
 import {useState, useEffect, useMemo, useCallback} from 'react';
 import {AxiosResponse} from 'axios';
-import HttpCodes from 'http-status-codes';
 
 import {ApiService} from '../services/api.service';
 import {FetchErrorType} from './fetch-error.type';
@@ -18,36 +17,7 @@ export const useFetch = (options: FetchOptionsType = {}) => {
     const [error, setError] = useState(defaultErr);
 
     const apiService = useMemo(() => new ApiService(), []);
-    const apiInstance = useMemo(() => apiService.getInstance(), []);
-
-    const put = useCallback((...args) => {
-        const requestParams = buildRequestParams(args);
-        return apiInstance.put(requestParams[0], requestParams[1]);
-    }, []);
-
-    const patch = useCallback((...args) => {
-        const requestParams = buildRequestParams(args);
-        return apiInstance.patch(requestParams[0], requestParams[1]);
-    }, []);
-
-    const post = useCallback((...args) => {
-        const requestParams = buildRequestParams(args);
-        return apiInstance.post(requestParams[0], requestParams[1]);
-    }, []);
-
-    const remove = useCallback((...args) => {
-        const requestParams = buildRequestParams(args);
-        return apiInstance.delete(requestParams[0], {data: requestParams[1]});
-    }, []);
-
-    const get = useCallback((url = options.path) => {
-        return apiInstance.get(url);
-    }, []);
-
-    const getWithParams = useCallback((...args) => {
-        const requestParams = buildRequestParams(args);
-        return apiInstance.get(requestParams[0], {params: requestParams[1]});
-    }, []);
+    const apiInstance = useMemo(() => apiService.getInstance(), [apiService]);
 
     const buildRequestParams: any = useCallback((args: any) => {
         if (args.length === 1) {
@@ -55,6 +25,35 @@ export const useFetch = (options: FetchOptionsType = {}) => {
         }
         return [args[0], args[1]];
     }, []);
+
+    const put = useCallback((...args) => {
+        const requestParams = buildRequestParams(args);
+        return apiInstance.put(requestParams[0], requestParams[1]);
+    }, [apiInstance, buildRequestParams]);
+
+    const patch = useCallback((...args) => {
+        const requestParams = buildRequestParams(args);
+        return apiInstance.patch(requestParams[0], requestParams[1]);
+    }, [apiInstance, buildRequestParams]);
+
+    const post = useCallback((...args) => {
+        const requestParams = buildRequestParams(args);
+        return apiInstance.post(requestParams[0], requestParams[1]);
+    }, [apiInstance, buildRequestParams]);
+
+    const remove = useCallback((...args) => {
+        const requestParams = buildRequestParams(args);
+        return apiInstance.delete(requestParams[0], {data: requestParams[1]});
+    }, [apiInstance, buildRequestParams]);
+
+    const get = useCallback((url = options.path) => {
+        return apiInstance.get(url);
+    }, [apiInstance]);
+
+    const getWithParams = useCallback((...args) => {
+        const requestParams = buildRequestParams(args);
+        return apiInstance.get(requestParams[0], {params: requestParams[1]});
+    }, [apiInstance, buildRequestParams]);
 
     const buildError: any = useCallback((error: any) => {
         let errorResponse = {

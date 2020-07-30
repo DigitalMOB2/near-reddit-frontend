@@ -13,7 +13,7 @@ export function MintForm() {
     const authCtx = useAuth();
 
     const {
-        loading, error, post,
+        loading, post,
     } = useFetch({
         path: getBackendEndpoint('/mint'),
         load: false,

@@ -140,7 +140,7 @@ export function AuthProvider(props: any) {
             shouldGetBalance: shouldGetBalance,
             visibleMintForm: false,
             visibleTransferForm: false,
-            showResponse: true,
+            showResponse: showResponse,
             response: response
         })
     }, [state]);
@@ -164,6 +164,7 @@ export function AuthProvider(props: any) {
             ...state,
             response: '',
             showResponse: false,
+            shouldGetBalance: false,
             showError: showError,
             error: error,
             showModal: modal
