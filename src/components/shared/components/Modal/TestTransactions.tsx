@@ -40,6 +40,8 @@ export function TestTransactions() {
     const [txs, setTxs] = React.useState(0);
     const [start, setStart] = React.useState(false);
     const [loading, setLoading] = React.useState(false);
+    const [showResults, setShowResults] = React.useState(false);
+    const [results, setResults] = React.useState({averageGasBurnt: 0, averageTxFee: 0});
 
     React.useEffect(() => {
         let timer: any;
@@ -69,9 +71,15 @@ export function TestTransactions() {
                 setTxs(config.testTransactionNumber * progress.data.progress)
             }, 3000);
         } else {
-            if (start) {
-                authCtx.setShowResponse(true, '', 'tests');
-            }
+            getProgress().then((response) => {
+                if (start) {
+                    setResults({averageGasBurnt: response.data.averageGasBurnt, averageTxFee: response.data.averageTxFee})
+                    setShowResults(true);
+                    authCtx.setShowResponse(true, '', response.data.contract);
+                    console.log(response.data)
+                }
+            }).catch((error) => console.log(error));
+
             setStart(false);
             setLoading(false);
         }
@@ -87,6 +95,7 @@ export function TestTransactions() {
         setSeconds(0);
         setMinutes(0);
         setStart(true);
+        setShowResults(false);
         setLoading(true);
         setGraph(180);
         setTxs(0);
@@ -141,5 +150,13 @@ export function TestTransactions() {
                 </Button>
             </Row>
         </div>
+        {showResults && <div>
+            <Row className={cs([s.testTransactionsGasText])}>
+                Average Gas Burnt: {results.averageGasBurnt}
+            </Row>
+            <Row className={cs([s.testTransactionsFeeText])}>
+                Average Tx Fee: {results.averageTxFee}
+            </Row>
+        </div>}
     </Col>
 }

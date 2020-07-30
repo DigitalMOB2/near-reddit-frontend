@@ -96,7 +96,7 @@ export function UserModal() {
                             href={authCtx.state.link === '' ?
                                 `https://explorer.testnet.near.org/transactions/${authCtx.state.response}`
                                 :
-                                `https://explorer.testnet.near.org/accounts/${config.contract}`
+                                `https://explorer.testnet.near.org/accounts/${authCtx.state.link}`
                             }
                             target={'_blank'}
                     >

@@ -245,6 +245,25 @@
   letter-spacing: 0.02em;
 }
 
+.testTransactionsGasText {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 16px;
+  text-align: center;
+  letter-spacing: 0.02em;
+  padding: 20px 0;
+}
+
+.testTransactionsFeeText {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 16px;
+  text-align: center;
+  letter-spacing: 0.02em;
+}
+
 .modalTransferRowText {
   font-weight: 500;
   font-size: 16px;
