@@ -5,6 +5,7 @@ import cs from 'classnames';
 import {
     PieChart, Pie, Cell,
 } from 'recharts';
+import BigNumber from 'bignumber.js';
 
 import s from '../../../App/app.module.css';
 import iconArrowStartTransactions from '../../assets/icon-start-transactions.svg';
@@ -40,7 +41,7 @@ export function TestTransactions() {
     const [start, setStart] = React.useState(false);
     const [loading, setLoading] = React.useState(false);
     const [showResults, setShowResults] = React.useState(false);
-    const [results, setResults] = React.useState({averageGasBurnt: 0, averageTxFee: 0});
+    const [results, setResults] = React.useState({averageGasBurnt: '0', averageTxFee: '0'});
 
     React.useEffect(() => {
         let timer: any;
@@ -74,7 +75,11 @@ export function TestTransactions() {
         } else {
             getProgress().then((response) => {
                 if (start) {
-                    setResults({averageGasBurnt: response.data.averageGasBurnt, averageTxFee: response.data.averageTxFee})
+                    let averageGasBurnt = new BigNumber(response.data.averageGasBurnt);
+                    let averageTxFee = new BigNumber(response.data.averageTxFee);
+                    let averageGasBurntFormat = averageGasBurnt.times(1e-18).toFixed(10);
+                    let averageTxFeeFormat = averageTxFee.times(1e-18).toFixed(10);
+                    setResults({averageGasBurnt: averageGasBurntFormat, averageTxFee: averageTxFeeFormat})
                     setShowResults(true);
                     authCtx.setShowResponse(true, '', response.data.contract);
 
