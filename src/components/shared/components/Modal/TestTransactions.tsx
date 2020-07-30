@@ -12,7 +12,6 @@ import iconGraphBlank from '../../assets/icon-graph-blank.svg';
 import {useAuth} from '../../../pages/Main/Homepage/Auth.context';
 import {useFetch} from '../../hooks/useFetch';
 import {getBackendEndpoint} from '../../utilities/api';
-import {config} from '../../../../config';
 
 const data = [
     { name: 'Group A', value: 300 },
@@ -67,8 +66,10 @@ export function TestTransactions() {
             setter = setInterval(async () => {
                 let progress: any;
                 progress = await getProgress().catch((error) => console.log(error))
-                setGraph( 180 - (progress.data.progress * 180))
-                setTxs(config.testTransactionNumber * progress.data.progress)
+                if (progress) {
+                    setGraph( 180 - (progress.data.progress * 180))
+                    setTxs(progress.data.totalTx * progress.data.progress)
+                }
             }, 3000);
         } else {
             getProgress().then((response) => {
@@ -76,12 +77,11 @@ export function TestTransactions() {
                     setResults({averageGasBurnt: response.data.averageGasBurnt, averageTxFee: response.data.averageTxFee})
                     setShowResults(true);
                     authCtx.setShowResponse(true, '', response.data.contract);
-                    console.log(response.data)
+
+                    setStart(false);
+                    setLoading(false);
                 }
             }).catch((error) => console.log(error));
-
-            setStart(false);
-            setLoading(false);
         }
 
         return () => {
@@ -132,11 +132,19 @@ export function TestTransactions() {
             {minutes < 10 ? '0' + minutes : minutes} : {seconds < 10 ? '0' + seconds : seconds}
         </Row>
         <Row className={cs([s.testTransactionsNumberText])}>
-            {txs}
+            {txs.toFixed(0)}
         </Row>
         <Row className={cs([s.testTransactionsText])}>
             Transactions
         </Row>
+        {showResults && <div>
+            <Row className={cs([s.testTransactionsGasText])}>
+                Average Gas Burnt: {results.averageGasBurnt}
+            </Row>
+            <Row className={cs([s.testTransactionsFeeText])}>
+                Average Tx Fee: {results.averageTxFee}
+            </Row>
+        </div>}
         <div className={cs([s.testTransactionsButtonWrapper])}>
             <Row>
                 <Button type="primary"
@@ -150,13 +158,6 @@ export function TestTransactions() {
                 </Button>
             </Row>
         </div>
-        {showResults && <div>
-            <Row className={cs([s.testTransactionsGasText])}>
-                Average Gas Burnt: {results.averageGasBurnt}
-            </Row>
-            <Row className={cs([s.testTransactionsFeeText])}>
-                Average Tx Fee: {results.averageTxFee}
-            </Row>
-        </div>}
+
     </Col>
 }
