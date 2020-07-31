@@ -150,9 +150,6 @@ export function TestTransactions() {
             <Row className={cs([s.testTransactionsGasText])}>
                 Average Gas Burnt: {results.averageGasBurnt}
             </Row>
-            <Row className={cs([s.testTransactionsFeeText])}>
-                Average Tx Fee: {results.averageTxFee}
-            </Row>
         </div>}
         <div className={cs([s.testTransactionsButtonWrapper])}>
             <Row>
