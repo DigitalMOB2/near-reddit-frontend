@@ -81,8 +81,8 @@ export function TestTransactions() {
                 if (start) {
                     let averageGasBurnt = new BigNumber(response.data.averageGasBurnt);
                     let averageTxFee = new BigNumber(response.data.averageTxFee);
-                    let averageGasBurntFormat = averageGasBurnt.times(1e-18).toFixed(10);
-                    let averageTxFeeFormat = averageTxFee.times(1e-18).toFixed(10);
+                    let averageGasBurntFormat = averageGasBurnt.times(1e-17).toFixed(10);
+                    let averageTxFeeFormat = averageTxFee.times(1e-17).toFixed(10);
                     setResults({averageGasBurnt: averageGasBurntFormat, averageTxFee: averageTxFeeFormat})
                     setShowResults(true);
                     authCtx.setShowResponse(true, '', response.data.contract);
@@ -149,6 +149,9 @@ export function TestTransactions() {
         {showResults && <div>
             <Row className={cs([s.testTransactionsGasText])}>
                 Average Gas Burnt: {results.averageGasBurnt}
+            </Row>
+            <Row className={cs([s.testTransactionsFeeText])}>
+                Average Tx Fee: {results.averageTxFee}
             </Row>
         </div>}
         <div className={cs([s.testTransactionsButtonWrapper])}>
