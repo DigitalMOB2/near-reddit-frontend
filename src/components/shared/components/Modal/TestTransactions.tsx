@@ -81,8 +81,8 @@ export function TestTransactions() {
                 if (start) {
                     let averageGasBurnt = new BigNumber(response.data.averageGasBurnt);
                     let averageTxFee = new BigNumber(response.data.averageTxFee);
-                    let averageGasBurntFormat = averageGasBurnt.times(1e-17).toFixed(10);
-                    let averageTxFeeFormat = averageTxFee.times(1e-17).toFixed(10);
+                    let averageGasBurntFormat = averageGasBurnt.times(1e-19).toFixed(10);
+                    let averageTxFeeFormat = averageTxFee.times(1e-19).toFixed(10);
                     setResults({averageGasBurnt: averageGasBurntFormat, averageTxFee: averageTxFeeFormat})
                     setShowResults(true);
                     authCtx.setShowResponse(true, '', response.data.contract);
